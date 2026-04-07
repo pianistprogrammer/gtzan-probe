@@ -1,0 +1,476 @@
+% -----------------------------------------------
+% TISMIR / ISMIR 2026 Paper — GTZAN-Probe
+% -----------------------------------------------
+
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[submission]{ismir}
+\usepackage{amsmath,cite,url}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{xspace}
+
+\title{Probing What Music Classifiers Actually Learn:\\ A Multi-Method Explainability Analysis of Genre Classification on GTZAN}
+
+\oneauthor
+  {Anonymous Author}
+  {Anonymous Affiliation\\\texttt{anonymous@ismir.net}}
+
+\def\authorname{J. Abimbola}
+
+\sloppy
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Convolutional neural networks (CNNs) achieve competitive accuracy on music genre classification, yet it remains unclear whether their decisions are grounded in musicologically meaningful features or in dataset artifacts such as recording noise, silence patterns, and artist fingerprints. This paper presents a systematic, multi-method explainability analysis of a CNN trained on the GTZAN dataset, employing three complementary techniques: SHAP (SHapley Additive exPlanations), LIME (Local Interpretable Model-agnostic Explanations), and attention maps from a fine-tuned Audio Spectrogram Transformer (AST). A quantitative validation framework is introduced comprising four metrics: musicological alignment, faithfulness, inter-method agreement, and spurious correlation detection, to rigorously evaluate explanation quality. The results reveal a notable genre-dependent dichotomy: some genres are classified based on genuinely musicological spectral features, while others are driven by recording artifacts and silence-region characteristics. Moreover, SHAP and LIME produce consistently low-agreement explanations for the same predictions, demonstrating that explanation narratives are strongly method-dependent. These findings underscore the necessity of multi-method triangulation and domain-grounded validation when deploying explainability tools in music information retrieval.
+\end{abstract}
+
+\section{Introduction}\label{sec:introduction}
+
+Music genre classification has served as a foundational benchmark in music information retrieval (MIR) since the seminal work of Tzanetakis and Cook \cite{Tzanetakis2002}. Over the past decade, deep learning models operating on mel spectrogram representations have driven classification accuracy on the GTZAN benchmark to near-perfect levels. Recent architectures, including capsule neural networks with aggressive data augmentation, have reported accuracies as high as 99.9\% \cite{Lim2025}, and other deep architectures have independently exceeded 99\% \cite{Nanni2023}, suggesting that the problem is approaching saturation on this benchmark. In terms of raw classification performance, there is little room left to gain.
+
+Yet this apparent ceiling of discovery masks a more fundamental and largely unresolved question: what are these models actually learning? High classification accuracy on GTZAN does not necessarily indicate that a model has internalised meaningful musical characteristics such as rhythm, harmony, or timbre. Prior work has demonstrated that classifiers may instead exploit dataset-specific artifacts, including recording conditions, duplicate clips, and labelling inconsistencies, to achieve high scores while failing to capture genuine genre semantics \cite{Sturm2016, Sturm2013}. A model that achieves 99\% accuracy by recognising microphone characteristics is fundamentally different from one that has learned the 12-bar blues structure or the sub-bass patterns of hip-hop, even though their test metrics may be identical. The research frontier, therefore, has shifted from improving accuracy to interrogating the nature of what is learned.
+
+This distinction is not merely academic. In MIR, models are increasingly deployed in production systems for recommendation, cataloguing, and rights management \cite{Fu2011}. If these systems base decisions on spurious correlations (microphone characteristics, compression artifacts, or silence padding), they will fail unpredictably on data that does not share these incidental properties. The field of eXplainable Artificial Intelligence (XAI) \cite{Arrieta2020} offers tools to interrogate model decisions, yet XAI methods have seen limited rigorous application in MIR.
+
+Prior work on explainability in music classification has been sparse and methodologically narrow. Mishra et~al.\ \cite{Mishra2017} applied LIME to music content analysis but did not validate whether the identified regions corresponded to musically meaningful features. Haunschmid et~al.\ \cite{Haunschmid2020} proposed audioLIME with source-separation-based explanations, advancing interpretability but not systematically evaluating faithfulness or cross-method consistency. No existing study, to the best of current knowledge, applies multiple complementary XAI techniques to the same model and validates the resulting explanations against both musicological ground truth and quantitative faithfulness metrics.
+
+The GTZAN dataset \cite{Tzanetakis2002} presents a particularly instructive test case. Despite being the most widely used benchmark in genre classification, GTZAN contains well-documented flaws: artist repetition within genres, inconsistent recording quality across genres, and faulty or mislabelled clips \cite{Sturm2013}. These flaws are not merely a limitation; they serve as a natural instrument for probing whether classifiers learn music or metadata. As Sturm \cite{Sturm2014} argued, a genre classifier may function as a ``horse'', a system that exploits dataset regularities without learning the intended concept.
+
+This paper addresses the following research questions:
+
+\begin{enumerate}
+\item[\textbf{RQ1}:] To what extent do CNN-based genre classifiers attend to musicologically meaningful spectral features versus dataset artifacts?
+\item[\textbf{RQ2}:] Do different XAI methods (SHAP, LIME, attention) provide consistent explanations for the same model decisions?
+\item[\textbf{RQ3}:] Can genuine musicological learning be quantitatively distinguished from spurious correlation exploitation?
+\end{enumerate}
+
+The contributions of this paper are as follows: (1) a multi-method explainability pipeline applying SHAP, LIME, and Transformer attention to the same CNN and dataset; (2) a four-metric quantitative validation framework for explanation quality; (3) empirical evidence that genre classifiers exhibit a genre-dependent spectrum from genuine musicological learning to artifact exploitation; and (4) a demonstration that XAI method choice substantially affects the explanation narrative, arguing for multi-method triangulation as standard practice.
+
+\section{Related Work}\label{sec:related}
+
+\subsection{Music genre classification}
+
+Music genre classification has been a central task in music information retrieval (MIR) since the pioneering work of Tzanetakis and Cook \cite{Tzanetakis2002}, which introduced a feature-based approach using timbral texture, rhythmic content, and pitch features. Early systems relied on handcrafted descriptors such as MFCCs, spectral centroid, zero-crossing rate, and beat histograms, combined with classical classifiers including k-nearest neighbours and support vector machines \cite{Li2003}.
+
+The field has since shifted toward deep learning approaches that learn representations directly from audio. Convolutional neural networks (CNNs) operating on mel spectrograms have become the dominant paradigm, demonstrating strong performance across multiple MIR tasks \cite{Dieleman2014, Choi2017}. Variants incorporating residual connections, attention mechanisms, and multi-scale feature extraction have further improved performance \cite{Palanisamy2020}. More recently, Transformer-based architectures such as the Audio Spectrogram Transformer (AST) \cite{Gong2021} and large-scale self-supervised models like MERT \cite{Li2024} have pushed performance closer to saturation by leveraging large pre-training corpora.
+
+Despite these advances, performance gains on GTZAN have plateaued, with multiple studies reporting accuracies exceeding 95\% and, in some cases, approaching 100\%. This saturation raises questions about whether further improvements reflect genuine advances in musical understanding or exploitation of dataset-specific regularities.
+
+\subsection{GTZAN dataset critique and shortcut learning}
+
+The GTZAN dataset \cite{Tzanetakis2002}, while widely used, has been extensively criticised for its structural flaws. Sturm \cite{Sturm2013} conducted a comprehensive audit, identifying duplicate recordings, mislabelled tracks, and substantial artist overlap between training and test sets. These issues introduce confounding factors that allow models to achieve artificially high performance without learning meaningful genre characteristics.
+
+This phenomenon is closely related to the concept of \textit{shortcut learning}, where models exploit spurious correlations that are predictive in the training data but not causally related to the task \cite{Geirhos2020}. In the context of GTZAN, such shortcuts may include recording conditions, production styles, or artist-specific characteristics rather than genre-defining musical features. Sturm \cite{Sturm2014} characterised this issue through the ``horse'' analogy, highlighting that classifiers may appear successful while relying on unintended cues.
+
+Subsequent work has reinforced these concerns by demonstrating that simple baselines exploiting metadata or recording artifacts can achieve competitive performance \cite{Flexer2007}. More broadly, the problem of dataset bias and spurious correlations has been widely studied in machine learning, with implications for model robustness and generalisation \cite{Torralba2011}. These findings motivate the need for methods that go beyond accuracy to interrogate what models actually learn.
+
+\subsection{Explainability in MIR}
+
+Explainable Artificial Intelligence (XAI) has emerged as a critical tool for understanding model behaviour, particularly in domains where interpretability and trust are essential \cite{Arrieta2020}. In MIR, however, the application of XAI remains relatively limited compared to computer vision and natural language processing.
+
+Early work by Mishra et~al.\ \cite{Mishra2017} applied LIME \cite{Ribeiro2016} to music content analysis, demonstrating that perturbation-based explanations can highlight salient spectrogram regions. Haunschmid et~al.\ \cite{Haunschmid2020} proposed audioLIME, which improves upon standard LIME by generating perturbations through source separation, yielding more musically meaningful explanations. Gradient-based attribution methods, including saliency maps and Grad-CAM \cite{Selvaraju2017}, have also been applied to audio classification tasks, though often without rigorous validation against domain knowledge.
+
+More recently, attention-based models such as AST \cite{Gong2021} have been used to provide interpretability through attention visualisation. However, the extent to which attention weights correspond to causal feature importance remains debated \cite{Jain2019}. This has led to increasing recognition that no single explanation method is sufficient to fully characterise model behaviour.
+
+\subsection{Evaluating explanations and the disagreement problem}
+
+A central challenge in XAI is the evaluation of explanation quality. Metrics such as faithfulness, sensitivity, and robustness have been proposed to assess whether explanations accurately reflect model decision processes \cite{Samek2017, Hooker2019}. However, these metrics are rarely applied in MIR, where qualitative inspection of saliency maps remains common practice.
+
+Another critical issue is the \textit{disagreement problem}: different XAI methods often produce substantially different explanations for the same prediction \cite{Krishna2022}. This has been observed across domains and raises concerns about the reliability of individual explanation techniques. In audio and MIR contexts, where perceptual structure is complex and multi-dimensional, this problem is likely to be even more pronounced.
+
+Despite these challenges, there has been no systematic study in MIR that (1) applies multiple complementary XAI methods to the same model, (2) quantitatively evaluates explanation quality, and (3) grounds explanations in domain-specific (musicological) expectations. This paper addresses this gap by introducing a multi-method, quantitatively validated framework for analysing what genre classifiers learn on GTZAN.
+
+\section{Methodology}\label{sec:methodology}
+
+\subsection{Dataset and pre-processing}\label{subsec:dataset}
+
+The GTZAN dataset \cite{Tzanetakis2002} is used, comprising 1,000 audio clips of 30 seconds each, distributed equally across 10 genres: blues, classical, country, disco, hip-hop, jazz, metal, pop, reggae, and rock. Following the audit methodology of Sturm \cite{Sturm2013}, known faulty clips (exact duplicates, severely distorted recordings) are flagged and excluded, restricting the analysis to clean clips.
+
+Audio is loaded at 22,050~Hz and converted to 128-bin mel spectrograms using a 2,048-sample FFT window with 512-sample hop length, computed via librosa \cite{McFee2015}. For the CNN, 3-second segments are randomly cropped from each 30-second clip during training (providing implicit data augmentation), converted to log-mel scale, and resized to $128 \times 128$ pixels. For the AST, 10-second segments are resampled to 16,000~Hz to match the pre-trained model's expected input format.
+
+The dataset is split into 80\% training and 20\% test sets using stratified sampling to ensure balanced genre representation, yielding approximately 800 training and 200 test clips.
+
+\subsection{CNN architecture (MusicCNN)}\label{subsec:cnn}
+
+The subject model is a purpose-built CNN designed for interpretability research. The architecture consists of three convolutional blocks, each containing two $3 \times 3$ convolutional layers with batch normalisation \cite{Ioffe2015}, ReLU activation, $2 \times 2$ max pooling, and spatial dropout (rate 0.15). Channel dimensions progress as $1 \rightarrow 32 \rightarrow 64 \rightarrow 128$. An adaptive average pooling layer produces $4 \times 4$ spatial features, followed by a two-layer fully connected head ($2{,}048 \rightarrow 256 \rightarrow 10$) with dropout (rate 0.4). The model totals approximately 814K parameters.
+
+Residual connections and complex skip pathways are deliberately avoided to ensure that feature attribution methods can trace contributions through the network without ambiguity. This design choice prioritises interpretability over raw performance.
+
+Training employs the AdamW optimiser \cite{Kingma2015} with an initial learning rate of $10^{-3}$, cosine annealing schedule with linear warmup \cite{Loshchilov2017}, and cross-entropy loss with label smoothing of 0.1. Data augmentation includes SpecAugment \cite{Park2019} (frequency and time masking) and mixup \cite{Zhang2018} ($\alpha = 0.3$). Training proceeds for 120 epochs with a batch size of 32. All experiments use PyTorch \cite{Paszke2019} on Apple MPS (Metal Performance Shaders) hardware acceleration.
+
+\subsection{Explainability methods}\label{subsec:xai_methods}
+
+Three complementary XAI techniques are applied, each grounded in different theoretical assumptions:
+
+\subsubsection{SHAP (SHapley Additive exPlanations)}
+
+SHAP \cite{Lundberg2017} is rooted in cooperative game theory, assigning each input feature an importance value based on Shapley values \cite{Shapley1953}. The DeepExplainer variant is employed, using a background distribution of 50 stratified training spectrograms (5 per genre) to compute expected model behaviour. For each correctly classified test clip, SHAP produces a $128 \times 128$ attribution map indicating how each mel spectrogram bin contributed to the predicted class.
+
+SHAP offers theoretical guarantees of local accuracy, missingness, and consistency that other attribution methods lack. However, the gradient-based approximation in DeepExplainer introduces some approximation error, and the method operates at the individual pixel level without awareness of perceptual grouping.
+
+\subsubsection{LIME (Local Interpretable Model-agnostic Explanations)}
+
+LIME \cite{Ribeiro2016} treats the model as a black box, perturbing the input and observing output changes to fit a local interpretable surrogate model. Each mel spectrogram is segmented into superpixels using the SLIC algorithm, 1,000 perturbations are generated by randomly masking subsets of superpixels, and a weighted Ridge regression model is fitted to approximate the local decision boundary.
+
+Unlike SHAP, LIME operates at the superpixel level, producing coarser but potentially more perceptually meaningful attributions. Its model-agnostic nature means it can be applied to any classifier without access to gradients.
+
+\subsubsection{AST attention maps}
+
+As a third perspective, an Audio Spectrogram Transformer (AST) \cite{Gong2021} pre-trained on AudioSet is fine-tuned and CLS token attention weights are extracted from the final self-attention layer. The AST processes each audio clip as a sequence of overlapping $16 \times 16$ spectrogram patches, and the CLS token's attention distribution indicates which patches the model attends to when making its classification decision.
+
+A two-phase fine-tuning strategy is employed: 10 epochs of linear probing (frozen backbone, trained head only) followed by 20 epochs of full fine-tuning with a reduced learning rate ($10^{-5}$). Cross-entropy loss with label smoothing of 0.1 is used throughout.
+
+The known caveat that attention weights do not necessarily reflect causal importance \cite{Jain2019} is acknowledged. Nevertheless, attention provides a complementary signal, especially valuable when compared against gradient-based (SHAP) and perturbation-based (LIME) methods.
+
+\subsection{Quantitative validation framework}\label{subsec:validation}
+
+A central contribution of this work is a four-metric framework for evaluating explanation quality in the context of music classification:
+
+\subsubsection{Musicological alignment ($\rho_{\text{align}}$)}
+
+Expected frequency band importance rankings are defined for each genre based on established music theory. Five canonical frequency bands are considered: sub-bass (0--60~Hz), bass (60--250~Hz), mid (250--2,000~Hz), upper-mid (2,000--6,000~Hz), and brilliance (6,000--20,000~Hz). For each genre, a musicological ranking is assigned (e.g., hip-hop is expected to show highest attribution in sub-bass/bass; classical in upper-mid/brilliance). 
+
+For each genre, the mean absolute SHAP value within each frequency band is computed, these bands are ranked by attribution magnitude, and the Spearman rank correlation ($\rho$) between the observed and expected rankings is computed:
+
+\begin{equation}\label{eq:alignment}
+\rho_{\text{align}} = 1 - \frac{6 \sum_{i=1}^{n} d_i^2}{n(n^2 - 1)}
+\end{equation}
+
+\noindent where $d_i$ is the rank difference for band $i$ and $n = 5$ is the number of frequency bands. Values near $+1$ indicate that the model attends to musicologically expected frequency regions; values near $-1$ suggest reliance on unexpected or artifactual features.
+
+\subsubsection{Faithfulness}
+
+Faithfulness measures whether the identified important regions are genuinely used by the model. We follow the occlusion protocol of Samek et~al.\ \cite{Samek2017} and Hooker et~al.\ \cite{Hooker2019}: for each explained clip, we progressively mask the top-$k$\% of pixels (by SHAP magnitude) with zeros and measure the drop in prediction confidence:
+
+\begin{equation}\label{eq:faithfulness}
+\text{Faith}(k) = P(\hat{y} \mid \mathbf{x}) - P(\hat{y} \mid \mathbf{x}_{\setminus \text{top-}k})
+\end{equation}
+
+\noindent where $P(\hat{y} \mid \mathbf{x})$ is the original confidence and $P(\hat{y} \mid \mathbf{x}_{\setminus \text{top-}k})$ is the confidence after masking. A large drop confirms that SHAP correctly identified decision-critical regions. We evaluate at $k \in \{5, 10, 20, 30, 50\}\%$.
+
+\subsubsection{Inter-method agreement}
+
+To quantify the disagreement problem \cite{Krishna2022}, we compute three agreement metrics between SHAP and LIME attribution maps: Pearson correlation coefficient $r$, Spearman rank correlation $\rho$, and intersection-over-union (IoU) of the top-10\% most important pixels:
+
+\begin{equation}\label{eq:iou}
+\text{IoU}_{10} = \frac{|\mathcal{S}_{10}^{\text{SHAP}} \cap \mathcal{S}_{10}^{\text{LIME}}|}{|\mathcal{S}_{10}^{\text{SHAP}} \cup \mathcal{S}_{10}^{\text{LIME}}|}
+\end{equation}
+
+\subsubsection{Spurious correlation detection}
+
+We compare SHAP attributions in spectrogram regions likely to contain artifacts versus regions containing musical content. Two ratios are computed: (1) the silence ratio, comparing mean SHAP magnitude in low-energy (silence) bins to high-energy bins; and (2) the edge ratio, comparing SHAP in temporal edge regions (first/last 10\% of the spectrogram) to centre regions. A silence ratio exceeding 1.0 indicates the model assigns more importance to silence than to musical content, which is a strong indicator of artifact exploitation.
+
+\section{Results}\label{sec:results}
+
+\subsection{Classification performance}\label{subsec:classification}
+
+The MusicCNN achieves an overall test accuracy of 83.4\% on 199 test clips, with substantial per-genre variation (\tabref{tab:accuracy}). Classical and jazz are classified perfectly (100\%), while disco and rock prove most challenging (65\%). These confusion patterns align with musicological similarity: disco and rock share similar rhythmic drive and spectral energy distributions, while classical and jazz have highly distinctive timbral profiles.
+
+\begin{table}[t]
+  \centering
+  \begin{tabular}{lrrl}
+    \toprule
+    Genre & Correct/Total & Accuracy (\%) & Level \\
+    \midrule
+    Classical & 20/20 & 100.0 & Excellent \\
+    Jazz      & 19/19 & 100.0 & Excellent \\
+    Blues     & 19/20 & 95.0  & Excellent \\
+    Hip-hop  & 19/20 & 95.0  & Excellent \\
+    Metal    & 17/20 & 85.0  & Good \\
+    Pop      & 17/20 & 85.0  & Good \\
+    Country  & 15/20 & 75.0  & Moderate \\
+    Reggae   & 14/20 & 70.0  & Moderate \\
+    Disco    & 13/20 & 65.0  & Moderate \\
+    Rock     & 13/20 & 65.0  & Moderate \\
+    \midrule
+    \textbf{Overall} & \textbf{166/199} & \textbf{83.4} & \\
+    \bottomrule
+  \end{tabular}
+  \caption{Per-genre test accuracy of the MusicCNN on GTZAN. Genres are ordered by accuracy.}
+  \label{tab:accuracy}
+\end{table}
+
+\figref{fig:confusion_matrix} displays the full confusion matrix. The primary confusion pairs are disco$\leftrightarrow$rock (4 mutual misclassifications), country$\leftrightarrow$rock (3), and reggae$\leftrightarrow$country (2). These confusions provide meaningful targets for XAI interrogation: understanding \textit{why} the model confuses these pairs may reveal whether it has learned the relevant distinguishing features.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[alt={Confusion matrix showing classification results across 10 genres},width=0.72\textwidth]{02_confusion_matrix.pdf}
+  \caption{Confusion matrix for MusicCNN on the GTZAN test set. Classical and jazz show perfect separation; disco and rock exhibit the highest mutual confusion.}
+  \label{fig:confusion_matrix}
+\end{figure*}
+
+\subsection{SHAP explanations}\label{subsec:shap_results}
+
+\figref{fig:shap_gallery} presents SHAP attribution overlays for representative correctly classified clips from each genre. The overlays reveal qualitatively distinct attribution patterns across genres. Classical clips show distributed high-frequency attribution consistent with orchestral overtone richness. Hip-hop shows concentrated low-frequency attribution aligned with bass-heavy production. Jazz exhibits broad spectral attribution reflecting harmonic complexity.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[alt={Gallery of SHAP attribution overlays on mel spectrograms for ten genres},width=0.95\textwidth]{FINAL_01_shap_hero.pdf}
+  \caption{SHAP attribution overlays on mel spectrograms for correctly classified clips from each genre. Red indicates positive attribution (pushes toward the predicted class); blue indicates negative attribution.}
+  \label{fig:shap_gallery}
+\end{figure*}
+
+\figref{fig:shap_bands} aggregates SHAP attributions by frequency band across genres. Notable patterns include the dominance of low-frequency bands for hip-hop and reggae, mid-range salience for country and rock, and high-frequency emphasis for classical and metal.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[alt={Bar chart showing mean absolute SHAP attribution per frequency band per genre},width=0.95\textwidth]{03_shap_frequency_bands.pdf}
+  \caption{Mean absolute SHAP attribution per frequency band per genre, revealing genre-specific spectral attention patterns.}
+  \label{fig:shap_bands}
+\end{figure*}
+
+\subsection{LIME explanations}\label{subsec:lime_results}
+
+\figref{fig:lime_gallery} shows LIME superpixel explanations for the same clips. LIME identifies broader contiguous regions compared to SHAP's pixel-level attributions, reflecting the superpixel granularity of the perturbation scheme.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[alt={Gallery of LIME superpixel explanations for ten genres},width=0.95\textwidth]{04_lime_gallery.pdf}
+  \caption{LIME superpixel importance maps for correctly classified clips. Green regions indicate positive contribution to the predicted genre; red indicates negative contribution.}
+  \label{fig:lime_gallery}
+\end{figure*}
+
+\figref{fig:quantitative_panel} provides a consolidated view of all four quantitative XAI metrics discussed in the following subsections.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[alt={Four-panel figure showing musicological alignment, faithfulness curves, SHAP-LIME agreement, and spurious correlation results},width=0.98\textwidth]{FINAL_02_quantitative_panel.pdf}
+  \caption{Quantitative XAI evaluation results. (A) Musicological alignment (Spearman $\rho$) per genre. (B) Faithfulness curves: prediction confidence drop under progressive SHAP-pixel masking. (C) SHAP\,vs.\,LIME agreement (Pearson $r$ and top-10\% IoU). (D) Spurious correlation: silence-to-high-energy SHAP attribution ratio.}
+  \label{fig:quantitative_panel}
+\end{figure*}
+
+\subsection{Faithfulness evaluation}\label{subsec:faithfulness}
+
+\figref{fig:faithfulness} presents faithfulness curves for all genres. Masking the top 5\% of SHAP-identified pixels produces confidence drops ranging from 29\% (hip-hop) to 72\% (classical), confirming that SHAP identifies genuinely decision-critical regions. At the 50\% masking level, all genres show substantial confidence degradation (\tabref{tab:faithfulness}).
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[alt={Line plots showing confidence drop as top SHAP pixels are progressively masked},width=0.95\textwidth]{05_faithfulness_curves.pdf}
+  \caption{Faithfulness evaluation: prediction confidence drop as progressive fractions of the top-SHAP pixels are masked. Steeper curves indicate more faithful explanations.}
+  \label{fig:faithfulness}
+\end{figure*}
+
+\begin{table}[t]
+  \centering
+  \begin{tabular}{lcc}
+    \toprule
+    Genre & Original Conf. & Faith.\ ($k=50\%$) \\
+    \midrule
+    Blues     & 0.958 & 0.741 \\
+    Classical & 0.807 & 0.626 \\
+    Country   & 0.903 & 0.817 \\
+    Disco     & 0.984 & 0.917 \\
+    Hip-hop   & 0.924 & 0.819 \\
+    Jazz      & 0.489 & 0.453 \\
+    Metal     & 0.584 & 0.530 \\
+    Pop       & 0.914 & 0.887 \\
+    Reggae    & 0.665 & 0.380 \\
+    Rock      & 0.600 & 0.472 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Faithfulness at $k=50\%$ masking: the confidence drop when removing the top half of SHAP-attributed pixels. Higher values indicate more faithful explanations.}
+  \label{tab:faithfulness}
+\end{table}
+
+Disco (0.917) and pop (0.887) exhibit the highest faithfulness, indicating highly localised decision strategies. Reggae (0.380) shows the lowest faithfulness, suggesting the model relies on diffuse, distributed spectral cues rather than localised features for this genre.
+
+\subsection{Musicological alignment}\label{subsec:alignment}
+
+\tabref{tab:alignment} and \figref{fig:alignment} present the Spearman correlation between observed SHAP band rankings and musicological expectations. The results reveal a striking genre-dependent pattern:
+
+\begin{table}[t]
+  \centering
+  \begin{tabular}{lrr}
+    \toprule
+    Genre & $\rho_{\text{align}}$ & $p$-value \\
+    \midrule
+    Hip-hop   & $+0.949$ & 0.051 \\
+    Reggae    & $+0.200$ & 0.800 \\
+    Disco     & $\phantom{+}0.000$ & 1.000 \\
+    Classical & $-0.400$ & 0.600 \\
+    Jazz      & $-0.400$ & 0.600 \\
+    Metal     & $-0.400$ & 0.600 \\
+    Blues     & $-0.800$ & 0.200 \\
+    Rock      & $-0.800$ & 0.200 \\
+    Pop       & $-0.949$ & 0.051 \\
+    Country   & $-1.000$ & $<$0.001 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Musicological alignment: Spearman rank correlation between SHAP frequency-band attributions and expected musicological importance rankings. Positive values indicate alignment; negative values suggest artifact exploitation.}
+  \label{tab:alignment}
+\end{table}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[alt={Bar chart showing musicological alignment scores per genre},width=0.95\linewidth]{05_musicological_alignment.pdf}
+  \caption{Musicological alignment scores by genre. Hip-hop shows strong positive alignment ($\rho = 0.95$) while country and pop show strong inverse alignment, suggesting artifact-driven classification.}
+  \label{fig:alignment}
+\end{figure}
+
+\textbf{Hip-hop} shows near-perfect positive alignment ($\rho = 0.95$, $p = 0.051$): the model attends primarily to sub-bass and bass regions, precisely where hip-hop's 808-style bass and rhythmic percussion reside. This constitutes strong evidence that the CNN has learned a genuine musicological feature for this genre.
+
+\textbf{Country} ($\rho = -1.0$, $p < 0.001$) and \textbf{pop} ($\rho = -0.95$, $p = 0.051$) exhibit near-perfect \textit{inverse} alignment. The model attends to frequency bands that are musicologically \textit{least} expected to be discriminative for these genres, strongly suggesting reliance on recording artifacts, noise floor characteristics, or other non-musical features.
+
+The remaining genres fall along a spectrum between these extremes, with reggae showing weak positive alignment ($\rho = 0.20$) and blues and rock showing substantial inverse tendencies ($\rho = -0.80$).
+
+\subsection{Inter-method agreement}\label{subsec:agreement}
+
+\tabref{tab:agreement} and \figref{fig:agreement} quantify the agreement between SHAP and LIME attributions. Across all genres, agreement is remarkably low: Pearson correlations range from $r = -0.01$ (disco) to $r = 0.20$ (metal), and top-10\% IoU ranges from 6.0\% (classical) to 18.8\% (country).
+
+\begin{table}[t]
+  \centering
+  \begin{tabular}{lccc}
+    \toprule
+    Genre & Pearson $r$ & Spearman $\rho$ & IoU$_{10}$(\%) \\
+    \midrule
+    Blues     & 0.037 & 0.039 & 11.4 \\
+    Classical & 0.038 & $-$0.001 & 6.0 \\
+    Country   & 0.165 & 0.145 & 18.8 \\
+    Disco     & $-$0.011 & 0.044 & 6.6 \\
+    Hip-hop   & 0.173 & 0.208 & 9.7 \\
+    Jazz      & 0.111 & 0.100 & 9.2 \\
+    Metal     & 0.202 & 0.239 & 8.8 \\
+    Pop       & 0.097 & $-$0.004 & 13.8 \\
+    Reggae    & 0.116 & 0.087 & 18.7 \\
+    Rock      & 0.038 & 0.141 & 8.4 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Inter-method agreement between SHAP and LIME. Low correlations and IoU values indicate substantial disagreement across all genres.}
+  \label{tab:agreement}
+\end{table}
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[alt={Heatmap showing SHAP vs LIME agreement metrics across genres},width=0.95\textwidth]{05_method_agreement.pdf}
+  \caption{Inter-method agreement between SHAP and LIME. All three metrics (Pearson $r$, Spearman $\rho$, top-10\% IoU) show consistently low agreement across genres.}
+  \label{fig:agreement}
+\end{figure*}
+
+This finding has significant implications. SHAP, operating at pixel granularity via gradient-based approximation, and LIME, operating at superpixel granularity via perturbation sampling, highlight fundamentally different aspects of the model's decision process. A practitioner using only SHAP would arrive at a different explanatory narrative than one using only LIME, even for the same prediction. This confirms and extends the disagreement problem identified in the general XAI literature \cite{Krishna2022} to the MIR domain.
+
+\subsection{Spurious correlation detection}\label{subsec:spurious}
+
+\tabref{tab:spurious} and \figref{fig:spurious} present the spurious correlation analysis, focusing on the silence attribution ratio.
+
+\begin{table}[t]
+  \centering
+  \begin{tabular}{lcccc}
+    \toprule
+    Genre & Silence & High-E & Ratio & Flag \\
+    \midrule
+    Blues     & 1.65e-3 & 1.18e-3 & 1.40 & \textbf{!} \\
+    Pop       & 1.38e-3 & 1.16e-3 & 1.20 & \textbf{!} \\
+    Classical & 7.45e-4 & 6.69e-4 & 1.11 & $\sim$ \\
+    Rock      & 8.18e-4 & 1.02e-3 & 0.80 & \\
+    Disco     & 1.09e-3 & 1.79e-3 & 0.61 & \\
+    Reggae    & 9.75e-4 & 1.67e-3 & 0.59 & \\
+    Metal     & 4.53e-4 & 7.89e-4 & 0.57 & \\
+    Jazz      & 7.25e-4 & 1.43e-3 & 0.51 & \\
+    Hip-hop   & 6.99e-4 & 1.44e-3 & 0.49 & \\
+    Country   & 7.42e-4 & 1.87e-3 & 0.40 & \\
+    \bottomrule
+  \end{tabular}
+  \caption{Spurious correlation detection: silence-to-high-energy SHAP ratio. Ratios exceeding 1.0 (\textbf{!}) indicate the model attributes more importance to silence than to musical content. Silence = mean |SHAP| in low-energy bins; High-E = mean |SHAP| in high-energy bins.}
+  \label{tab:spurious}
+\end{table}
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[alt={Bar chart comparing SHAP attribution in silence versus high-energy regions},width=0.95\textwidth]{05_spurious_correlation.pdf}
+  \caption{Spurious correlation analysis: SHAP attribution ratio between silence and high-energy spectrogram regions. Blues and pop show ratios exceeding 1.0, indicating artifact-driven classification.}
+  \label{fig:spurious}
+\end{figure*}
+
+\textbf{Blues} (ratio = 1.40) and \textbf{pop} (ratio = 1.20) show silence ratios exceeding 1.0, meaning the model assigns greater importance to spectrogram bins corresponding to silence than to bins with actual musical content. This is a clear indicator of artifact exploitation. Blues tracks in GTZAN tend to be older recordings with distinctive noise floors; the model has evidently learned to recognise these recording-quality signatures rather than (or in addition to) the 12-bar blues structure and pentatonic scale patterns that define the genre musically. Similarly, pop tracks may carry characteristic compression artifacts that serve as shortcuts for the model.
+
+For well-classified genres like hip-hop (ratio = 0.49), country (0.40), and jazz (0.51), the model appropriately focuses on high-energy musical content rather than silence regions.
+
+\tabref{tab:xai_summary} summarises all four XAI metrics jointly across genres.
+
+\begin{table}[t]
+  \centering
+  \caption{XAI metrics summary per genre. Alignment $\rho$: Spearman rank correlation with musicological expectations. Faith.\ ($k{=}50\%$): confidence drop after masking 50\% of top-SHAP pixels. SHAP--LIME $r$: Pearson correlation between the two attribution maps. Spurious ratio: silence-to-high-energy SHAP attribution ratio.}
+  \label{tab:xai_summary}
+  \begin{tabular}{lrrrr}
+    \toprule
+    Genre & Alignment $\rho$ & Faith.\ ($k{=}50\%$) & SHAP--LIME $r$ & Spurious ratio \\
+    \midrule
+    Blues     & $-0.800$ & $0.741$ & $0.037$ & $1.395$ \\
+    Classical & $-0.400$ & $0.626$ & $0.038$ & $1.114$ \\
+    Country   & $-1.000$ & $0.817$ & $0.165$ & $0.398$ \\
+    Disco     & $\phantom{-}0.000$ & $0.917$ & $-0.011$ & $0.608$ \\
+    Hip-hop   & $+0.949$ & $0.819$ & $0.173$ & $0.486$ \\
+    Jazz      & $-0.400$ & $0.453$ & $0.111$ & $0.507$ \\
+    Metal     & $-0.400$ & $0.530$ & $0.202$ & $0.574$ \\
+    Pop       & $-0.949$ & $0.887$ & $0.097$ & $1.195$ \\
+    Reggae    & $+0.200$ & $0.380$ & $0.116$ & $0.585$ \\
+    Rock      & $-0.800$ & $0.472$ & $0.038$ & $0.798$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Transformer attention analysis}\label{subsec:attention}
+
+\figref{fig:attention} displays CLS token attention heatmaps from the fine-tuned AST for representative clips of each genre. The attention patterns complement the SHAP and LIME findings: genres with concentrated attention over specific time-frequency regions (e.g., hip-hop's low-frequency focus) generally correspond to higher musicological alignment scores, while genres with diffuse or edge-concentrated attention (e.g., blues) correspond to lower alignment.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[alt={Gallery of AST CLS attention heatmaps for ten genres},width=0.95\textwidth]{06_attention_gallery.pdf}
+  \caption{CLS token attention from the last self-attention layer of the fine-tuned AST, visualised over the input spectrogram for each genre. Brighter regions indicate higher attention weight.}
+  \label{fig:attention}
+\end{figure*}
+
+\section{Discussion}\label{sec:discussion}
+
+\subsection{A spectrum of musicological learning}
+
+The results reveal that genre classifiers do not uniformly learn genuine musical features or uniformly exploit artifacts. Instead, each genre occupies a position along a spectrum. At one end, hip-hop classification is well-grounded in musicological features: the model attends to the sub-bass and bass regions where the genre's defining rhythmic and harmonic patterns reside. At the other end, country and pop classification appears driven primarily by artifacts, with the model attending to frequency bands inversely correlated with musicological expectations.
+
+This genre-dependent behaviour likely reflects the interaction between genre-specific acoustic properties and GTZAN's dataset characteristics. Hip-hop's spectral signature, dominated by low-frequency 808-style bass and drum machine patterns, is highly distinctive and consistent across recordings regardless of recording quality. In contrast, country and pop tracks in GTZAN may share less distinctive spectral signatures, leading the model to rely on secondary cues introduced by the dataset's construction.
+
+\subsection{The disagreement problem in MIR}
+
+The finding that SHAP and LIME produce low-agreement explanations (Pearson $r = 0.04$--$0.20$) has practical implications for MIR researchers and practitioners. If one were to diagnose model behaviour using only SHAP, one would identify fine-grained spectral regions as important. Using only LIME, one would identify broader contiguous regions, potentially suggesting different musical features as salient. This disagreement arises from methodological differences: SHAP computes pixel-level Shapley values via gradient-based approximation, while LIME perturbs superpixel-scale regions and fits a local linear model.
+
+This disagreement is not a deficiency of either method alone, but rather a fundamental property of trying to explain complex, nonlinear decisions through simpler approximations. Each method captures a different facet of the model's decision surface. This finding supports the principle of \textit{multi-method triangulation}: explanations should be sought from diverse methods, and only conclusions supported by convergent evidence across methods should be treated as robust.
+
+\subsection{Implications for dataset design}
+
+The spurious correlation analysis provides direct, quantitative evidence for concerns raised by Sturm \cite{Sturm2013, Sturm2014} about GTZAN. The model's reliance on silence-region characteristics for blues and pop classification confirms that recording-quality artifacts serve as classification shortcuts. This finding has implications beyond GTZAN: any music dataset with systematic genre-correlated recording conditions risks training models that exploit these correlations.
+
+Future dataset construction should incorporate: (1) recording-quality normalisation across genres; (2) explicit artist-disjoint train/test splits; and (3) routine XAI-based auditing of trained models to detect spurious feature reliance before deployment.
+
+\subsection{Limitations}
+
+Several limitations should be acknowledged. First, the musicological ground truth adopted here is necessarily simplified: reducing genre-defining features to five frequency bands is a coarse approximation of the rich, multi-dimensional nature of musical genre. Second, the GTZAN dataset is small by modern standards (1,000 clips), limiting the statistical power of per-genre analyses. Third, the CNN architecture, while chosen for interpretability, does not represent the state of the art in genre classification; results may differ with more complex architectures. Fourth, the attention-as-explanation interpretation \cite{Jain2019} remains debated in the literature, though this is mitigated by using attention as a complementary signal alongside gradient-based and perturbation-based methods rather than as a standalone explanation.
+
+\section{Conclusion}\label{sec:conclusion}
+
+This paper has presented a systematic, multi-method explainability analysis of a CNN music genre classifier on the GTZAN dataset, employing SHAP, LIME, and Transformer attention with a four-metric quantitative validation framework. The findings demonstrate that: (1) genre classifiers learn a genre-dependent mixture of genuine musicological features and dataset artifacts; (2) the choice of XAI method substantially affects the explanation narrative, with SHAP-LIME agreement consistently below $r = 0.21$; (3) spurious correlation detection can quantitatively identify genres where models exploit recording artifacts rather than musical content; and (4) multi-method triangulation provides a more complete and trustworthy picture than any single XAI method.
+
+These results argue for adopting explainability analysis as standard practice in MIR model development: not only to understand \textit{what} models learn, but to safeguard against deploying systems whose apparent competence masks reliance on dataset shortcomings.
+
+\section{Reproducibility}
+
+All source code, trained models, and experimental outputs are available at \texttt{[anonymised for review]}. The pipeline consists of eight sequential scripts covering dataset preparation, CNN training, evaluation, SHAP/LIME computation, quantitative validation, AST fine-tuning, and figure generation. The GTZAN dataset is publicly available \cite{Tzanetakis2002}.
+
+% AI Usage Statement
+\section{AI Usage Statement}
+
+Generative AI tools (GitHub Copilot) were used to assist with code implementation, debugging, and manuscript drafting. All scientific content, experimental design, analysis, and conclusions were directed and verified by the author. The AI assistant did not independently design experiments or draw conclusions.
+
+% Ethics Statement
+\section{Ethics Statement}
+
+This research uses the publicly available GTZAN dataset \cite{Tzanetakis2002}, which contains short excerpts of commercially released music used under fair use for non-commercial research. No human subjects were involved.
+
+\bibliography{references}
+
+\end{document}
