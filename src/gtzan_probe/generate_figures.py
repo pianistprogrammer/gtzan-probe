@@ -27,6 +27,25 @@ IEEE_DOUBLE = 3.5
 ISMIR_FULL = 16.0
 
 
+def _robust_signed_overlay(sv: np.ndarray) -> tuple[np.ndarray, np.ndarray, float]:
+    """Return clipped SHAP values + alpha mask using robust percentile scaling.
+
+    This prevents a few extreme pixels from washing out the colormap and keeps
+    positive (red) / negative (blue) regions clearly visible.
+    """
+    abs_sv = np.abs(sv)
+    vmax = float(np.percentile(abs_sv, 99))
+    if not np.isfinite(vmax) or vmax <= 0:
+        vmax = float(abs_sv.max() if abs_sv.size else 1.0)
+    vmax = max(vmax, 1e-8)
+    sv_clip = np.clip(sv, -vmax, vmax)
+    norm = np.abs(sv_clip) / vmax
+    # Hide near-zero values and emphasize salient regions
+    alpha = np.clip((norm - 0.15) / 0.85, 0.0, 1.0) ** 0.7
+    alpha *= 0.98
+    return sv_clip, alpha, vmax
+
+
 def main():
     setup_plotting()
 
@@ -58,10 +77,19 @@ def main():
         ax = axes_flat[i]
         res = shap_results[genre]
         sv = res["shap_values"]
-        vmax = np.abs(sv).max()
+        sv_clip, alpha_mask, vmax = _robust_signed_overlay(sv)
 
-        ax.imshow(res["spectrogram"], aspect="auto", origin="lower", cmap="gray_r", alpha=0.4)
-        ax.imshow(sv, aspect="auto", origin="lower", cmap=shap_cmap, alpha=0.7, vmin=-vmax, vmax=vmax)
+        # Slightly brighter base to improve red/blue contrast.
+        ax.imshow(res["spectrogram"], aspect="auto", origin="lower", cmap="gray", alpha=0.52)
+        im = ax.imshow(
+            sv_clip,
+            aspect="auto",
+            origin="lower",
+            cmap=shap_cmap,
+            alpha=alpha_mask,
+            vmin=-vmax,
+            vmax=vmax,
+        )
         ax.set_title(genre.capitalize(), fontsize=10, fontweight="bold", color=GENRE_COLORS[genre])
         if i >= 5:
             ax.set_xlabel("Time", fontsize=8)
@@ -71,8 +99,14 @@ def main():
     for j in range(len(available), len(axes_flat)):
         axes_flat[j].set_visible(False)
 
+    # Reserve space on the far-right and place a dedicated colorbar axis there.
+    fig.subplots_adjust(right=0.90, wspace=0.20, hspace=0.25)
+    cax = fig.add_axes([0.92, 0.14, 0.012, 0.72])  # [left, bottom, width, height]
+    cbar = fig.colorbar(im, cax=cax)
+    cbar.set_label("SHAP value\n(blue = negative, red = positive)", fontsize=8)
+    cbar.ax.tick_params(labelsize=7)
     fig.suptitle("SHAP Attribution Overlays Across All GTZAN Genres", fontweight="bold")
-    savefig("FINAL_01_shap_hero", fig)
+    savefig("FINAL_01_shap_hero", fig, tight=False)
 
     # ══════════════════════════════════════════════════════════════════════════
     # FINAL FIGURE 2 — Quantitative results panel

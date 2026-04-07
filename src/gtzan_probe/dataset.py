@@ -1,11 +1,44 @@
 """Shared dataset and audio-loading utilities."""
 
+from pathlib import Path
+
 import numpy as np
 import librosa
 import torch
 from torch.utils.data import Dataset
 
-from .config import SR, N_MELS, N_FFT, HOP, FIXED_W, DURATION, SEG_S
+from .config import SR, N_MELS, N_FFT, HOP, FIXED_W, DURATION, SEG_S, GTZAN_ROOT
+
+
+def resolve_audio_path(filepath: str, filename: str | None = None, genre: str | None = None) -> str:
+    """Resolve stale absolute paths to the local project GTZAN root.
+
+    Some cached artifacts may contain filepaths from a different machine.
+    We first try the original path, then reconstruct from local GTZAN_ROOT.
+    """
+    p = Path(filepath)
+    if p.exists():
+        return str(p)
+
+    name = filename or p.name
+    if not name:
+        return filepath
+
+    # Infer genre from explicit argument or "genre.00000.wav" filename prefix.
+    inferred_genre = (genre or "").strip().lower()
+    if not inferred_genre and "." in name:
+        inferred_genre = name.split(".", 1)[0].lower()
+
+    if inferred_genre:
+        candidate = GTZAN_ROOT / inferred_genre / name
+        if candidate.exists():
+            return str(candidate)
+
+    # Last fallback: recursive basename search under GTZAN root.
+    matches = list(GTZAN_ROOT.rglob(name))
+    if matches:
+        return str(matches[0])
+    return filepath
 
 
 # ── SpecAugment helpers ──────────────────────────────────────────────────────
@@ -126,7 +159,8 @@ class GTZANMultiCropDataset(Dataset):
 
 def load_spectrogram(filepath, start_s=0.0):
     """Load a single clip as a normalised mel spectrogram tensor (1, 1, 128, W)."""
-    y, _ = librosa.load(filepath, sr=SR, offset=start_s, duration=SEG_S)
+    resolved = resolve_audio_path(filepath)
+    y, _ = librosa.load(resolved, sr=SR, offset=start_s, duration=SEG_S)
     if len(y) < int(SEG_S * SR):
         y = np.pad(y, (0, int(SEG_S * SR) - len(y)))
 

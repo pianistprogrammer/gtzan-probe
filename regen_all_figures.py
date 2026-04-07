@@ -246,6 +246,19 @@ print("02_training_curves — skipped (requires training history, not saved as C
 shap_cmap = LinearSegmentedColormap.from_list("shap_div", ["#2196F3", "#FFFFFF", "#F44336"], N=256)
 available_shap = [g for g in GENRES if g in shap_results]
 
+def robust_signed_overlay(sv):
+    """Clip extremes and compute per-pixel alpha for clearer signed attributions."""
+    abs_sv = np.abs(sv)
+    vmax = float(np.percentile(abs_sv, 99))
+    if not np.isfinite(vmax) or vmax <= 0:
+        vmax = float(abs_sv.max() if abs_sv.size else 1.0)
+    vmax = max(vmax, 1e-8)
+    sv_clip = np.clip(sv, -vmax, vmax)
+    norm = np.abs(sv_clip) / vmax
+    alpha = np.clip((norm - 0.15) / 0.85, 0.0, 1.0) ** 0.7
+    alpha *= 0.98
+    return sv_clip, alpha, vmax
+
 print("03_shap_gallery ...")
 n = len(available_shap)
 cols = 5
@@ -494,9 +507,9 @@ for i, genre in enumerate(available_shap):
     ax = axes_flat[i]
     res = shap_results[genre]
     sv = res["shap_values"]
-    vmax = np.abs(sv).max()
-    ax.imshow(res["spectrogram"], aspect="auto", origin="lower", cmap="gray_r", alpha=0.4)
-    ax.imshow(sv, aspect="auto", origin="lower", cmap=shap_cmap, alpha=0.7, vmin=-vmax, vmax=vmax)
+    sv_clip, alpha_mask, vmax = robust_signed_overlay(sv)
+    ax.imshow(res["spectrogram"], aspect="auto", origin="lower", cmap="gray", alpha=0.52)
+    im = ax.imshow(sv_clip, aspect="auto", origin="lower", cmap=shap_cmap, alpha=alpha_mask, vmin=-vmax, vmax=vmax)
     ax.set_title(genre.capitalize(), fontsize=10, fontweight="bold", color=GENRE_COLORS[genre])
     if i >= 5:
         ax.set_xlabel("Time", fontsize=8)
@@ -504,8 +517,13 @@ for i, genre in enumerate(available_shap):
         ax.set_ylabel("Mel bin", fontsize=8)
 for j in range(len(available_shap), len(axes_flat)):
     axes_flat[j].set_visible(False)
+fig.subplots_adjust(right=0.90, wspace=0.20, hspace=0.25)
+cax = fig.add_axes([0.92, 0.14, 0.012, 0.72])
+cbar = fig.colorbar(im, cax=cax)
+cbar.set_label("SHAP value\n(blue = negative, red = positive)", fontsize=8)
+cbar.ax.tick_params(labelsize=7)
 fig.suptitle("SHAP Attribution Overlays Across All GTZAN Genres", fontweight="bold")
-savefig("FINAL_01_shap_hero", fig)
+savefig("FINAL_01_shap_hero", fig, tight=False)
 
 print("FINAL_02_quantitative_panel ...")
 fig = plt.figure(figsize=(ISMIR_FULL, 9))

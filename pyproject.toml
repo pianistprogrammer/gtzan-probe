@@ -32,6 +32,7 @@ explain-lime = "gtzan_probe.explain_lime:main"
 validate = "gtzan_probe.validate:main"
 explain-attention = "gtzan_probe.explain_attention:main"
 generate-figures = "gtzan_probe.generate_figures:main"
+interventional-validate = "gtzan_probe.interventional_validation:main"
 
 [build-system]
 requires = ["hatchling"]
