@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex paper"] 1775576932.81283 "paper.aux" "paper.bbl" "paper" 1775576934.70011 0
+["bibtex paper"] 1775649704.99405 "paper.aux" "paper.bbl" "paper" 1775649705.93283 0
   "./IEEEtran.bst" 1774595703.31 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "./references.bib" 1775576918.11 11953 54e617e714cd9490e16e92593a914f5a ""
-  "paper.aux" 1775576934.01 13441 248bb176cc988b9a85f3ea3c1a8f34e1 "pdflatex"
+  "./references.bib" 1775584557.26 14630 bde36cfed07c44fc9a24a131053d3484 ""
+  "paper.aux" 1775649705.32 12469 0741cb358a98348a659f33f17862d352 "pdflatex"
   (generated)
   "paper.bbl"
   "paper.blg"
   (rewritten before read)
-["pdflatex"] 1775576933.23186 "/Volumes/AI/gtzan-probe/Paper/paper.tex" "paper.pdf" "paper" 1775576934.70026 0
-  "/Volumes/AI/gtzan-probe/Paper/paper.tex" 1775576931.79 43379 692d68c5b1f680a455bd56a5a270950b ""
+["pdflatex"] 1775649705.09407 "/Volumes/AI/gtzan-probe/Paper/paper.tex" "paper.pdf" "paper" 1775649705.93299 0
+  "/Volumes/AI/gtzan-probe/Paper/paper.tex" 1775649703.86 46709 c25a1b69580e18507c28db69d85f6bef ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/courier/pcrr8r.tfm" 1136768653 1292 bd42be2f344128bff6d35d98474adfe3 ""
@@ -86,6 +86,7 @@
   "/usr/local/texlive/2026/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg" 1279039959 678 4792914a8f45be57bb98413425e4c7af ""
   "/usr/local/texlive/2026/texmf-dist/tex/latex/lineno/lineno.sty" 1771278992 155535 edbc920f8c4825a66d507b1de69c9ae0 ""
   "/usr/local/texlive/2026/texmf-dist/tex/latex/multirow/multirow.sty" 1731446765 6696 886c9f3087d0b973ed2c19aa79cb3023 ""
+  "/usr/local/texlive/2026/texmf-dist/tex/latex/placeins/placeins.sty" 1137110565 4087 636308456f60d2b31cbf97867db5708d ""
   "/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/t1pcr.fd" 1137110629 798 d5895e9edc628f2be019beb2c0ec66df ""
   "/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/t1phv.fd" 1586716065 1483 47067fbe7c3ffed1ede7aaa7b8549d7a ""
   "/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/t1ptm.fd" 1137110629 774 61d7da1e9f9e74989b196d147e623736 ""
@@ -104,14 +105,15 @@
   "05_musicological_alignment.pdf" 1774599626.76 29508 2a635a3f6c0d51cff4dc13b0f9039b0b ""
   "05_spurious_correlation.pdf" 1774599626.76 21839 d728a0206fa9321766e5c9a4a6480e87 ""
   "06_attention_gallery.pdf" 1774599626.76 163927 dfe83ad00724f56bf5e3800c44dda6d0 ""
-  "FINAL_01_shap_hero.pdf" 1774599626.79 607753 5320efeef54c8e95cfb8c6d9e214b66d ""
+  "07_fma_gtzan_correlation.pdf" 1775583541.07 18586 4c9a281f9652d989008aecd796a441cc ""
+  "FINAL_01_shap_hero.pdf" 1775578790.45 827166 11ff9b3746d0f9a27e365bd0cad008b2 ""
   "FINAL_02_quantitative_panel.pdf" 1774599626.79 34457 ab04976d33f8bbb731be06023eaeed39 ""
   "cc_by.pdf" 1774595703.64 3422 af5b27ee6bca9c0f194a55f11008b85f ""
   "cite.sty" 1774595703.64 26218 19edeff8cdc2bcb704e8051dc55eb5a7 ""
   "ismir.sty" 1774595703.65 11163 8452f8b5ebd4dd4a61e6e2e23348d66d ""
-  "paper.aux" 1775576934.01 13441 248bb176cc988b9a85f3ea3c1a8f34e1 "pdflatex"
-  "paper.bbl" 1775576933.15 7772 cbaee8fbac8b52ad847ac1060ba94d01 "bibtex paper"
-  "paper.tex" 1775576931.79 43379 692d68c5b1f680a455bd56a5a270950b ""
+  "paper.aux" 1775649705.32 12469 0741cb358a98348a659f33f17862d352 "pdflatex"
+  "paper.bbl" 1775649705.08 9656 9291c79f45d4af3f84c34eb49f6f52cb "bibtex paper"
+  "paper.tex" 1775649703.86 46709 c25a1b69580e18507c28db69d85f6bef ""
   (generated)
   "paper.aux"
   "paper.log"

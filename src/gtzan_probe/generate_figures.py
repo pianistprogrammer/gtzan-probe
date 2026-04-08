@@ -21,6 +21,12 @@ from .config import (
     setup_plotting, savefig,
 )
 
+GENRE_DISPLAY = {
+    "blues": "Blues", "classical": "Classical", "country": "Country",
+    "disco": "Disco", "hiphop": "Hip-hop", "jazz": "Jazz",
+    "metal": "Metal", "pop": "Pop", "reggae": "Reggae", "rock": "Rock",
+}
+
 # IEEE / ISMIR layout widths (inches)
 IEEE_SINGLE = 7.25
 IEEE_DOUBLE = 3.5
@@ -120,7 +126,7 @@ def main():
     colors_a = [GENRE_COLORS.get(g, "#999") for g in alignment_df["genre"]]
     ax_a.bar(x, alignment_df["spearman_r"], color=colors_a, edgecolor="white")
     ax_a.set_xticks(x)
-    ax_a.set_xticklabels([g[:4].capitalize() for g in alignment_df["genre"]], rotation=45, ha="right", fontsize=8)
+    ax_a.set_xticklabels([GENRE_DISPLAY.get(g, g.capitalize()) for g in alignment_df["genre"]], rotation=45, ha="right", fontsize=8)
     ax_a.set_ylabel("Spearman ρ")
     ax_a.set_title("A  Musicological Alignment", fontweight="bold")
     ax_a.axhline(0, color="black", linewidth=0.5)
@@ -143,7 +149,7 @@ def main():
     ax_c.bar(x_c - w / 2, agree_df["pearson_r"], w, label="Pearson r", color="#2196F3")
     ax_c.bar(x_c + w / 2, agree_df["top10_iou"], w, label="Top-10% IoU", color="#F44336")
     ax_c.set_xticks(x_c)
-    ax_c.set_xticklabels([g[:4].capitalize() for g in agree_df["genre"]], rotation=45, ha="right", fontsize=8)
+    ax_c.set_xticklabels([GENRE_DISPLAY.get(g, g.capitalize()) for g in agree_df["genre"]], rotation=45, ha="right", fontsize=8)
     ax_c.set_ylabel("Score")
     ax_c.set_title("C  SHAP vs LIME Agreement", fontweight="bold")
     ax_c.legend(fontsize=8)
@@ -153,7 +159,7 @@ def main():
     x_d = np.arange(len(spurious_df))
     ax_d.bar(x_d, spurious_df["silence_ratio"], color="#F44336", alpha=0.8, label="Silence/Signal ratio")
     ax_d.set_xticks(x_d)
-    ax_d.set_xticklabels([g[:4].capitalize() for g in spurious_df["genre"]], rotation=45, ha="right", fontsize=8)
+    ax_d.set_xticklabels([GENRE_DISPLAY.get(g, g.capitalize()) for g in spurious_df["genre"]], rotation=45, ha="right", fontsize=8)
     ax_d.set_ylabel("Ratio")
     ax_d.set_title("D  Spurious: Silence Attribution Ratio", fontweight="bold")
 

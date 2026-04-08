@@ -1,0 +1,112 @@
+COVER LETTER TO THE EDITORS
+Transactions of the International Society for Music Information Retrieval (TISMIR)
+
+Manuscript title:
+  "Probing What Music Classifiers Actually Learn: A Multi-Method Explainability
+   Analysis of Genre Classification on GTZAN"
+
+Submitted by: J. Abimbola
+
+------------------------------------------------------------------------
+AIM OF THE PUBLICATION
+------------------------------------------------------------------------
+
+This manuscript presents a systematic, multi-method explainability analysis of a
+convolutional neural network (CNN) trained on the GTZAN music genre dataset. The
+central research question is whether CNN-based genre classifiers attend to
+musically meaningful spectral features or instead exploit dataset-specific
+artifacts such as silence patterns, recording noise, and artist-fingerprinting
+effects.
+
+To address this, we apply three complementary XAI techniques — SHapley Additive
+exPlanations (SHAP), Local Interpretable Model-agnostic Explanations (LIME), and
+CLS-token attention visualisation from a fine-tuned Audio Spectrogram Transformer
+(AST) — to the same subject model and introduce a four-metric quantitative
+evaluation framework:
+
+  1. Music-informed spectral alignment (Spearman rho between observed and
+     expected frequency-band attribution rankings per genre)
+  2. Faithfulness under progressive pixel masking (confidence-drop curves)
+  3. Inter-method agreement (Pearson r, Spearman rho, top-10% IoU between SHAP
+     and LIME attribution maps)
+  4. Spurious correlation detection (silence-to-high-energy attribution ratio)
+
+Findings demonstrate strong genre dependence: hip-hop exhibits near-perfect
+positive alignment with low-frequency musical priors (rho = 0.95), while country
+and pop show inverse alignment, elevated silence attribution, and low inter-method
+agreement. SHAP and LIME systematically disagree for the same predictions
+(Pearson r range: -0.01 to 0.20; top-10% IoU range: 6.0%–18.8%), confirming the
+XAI "disagreement problem" in the MIR domain for the first time with quantitative
+metrics.
+
+The contribution is methodological: a reproducible, domain-grounded evaluation
+pipeline for explanation quality in music classification research that motivates
+multi-method triangulation as standard MIR practice.
+
+------------------------------------------------------------------------
+SPECIAL CONSIDERATIONS
+------------------------------------------------------------------------
+
+Review process: This submission is prepared for double-blind peer review
+in accordance with TISMIR guidelines. Author identity information has been
+anonymised in the submitted manuscript.
+
+------------------------------------------------------------------------
+DECLARATION OF PRIOR PUBLICATION
+------------------------------------------------------------------------
+
+This paper is an original work and has not been previously published, nor is it
+currently under review elsewhere. It is not based upon, substantially similar to,
+or derived from any prior conference paper or preprint. No prior publication
+declaration is required.
+
+------------------------------------------------------------------------
+COPYRIGHT AND PERMISSIONS
+------------------------------------------------------------------------
+
+All figures are original and generated from our own experimental pipeline. The
+GTZAN dataset is used under its standard research licence. The FMA-small dataset
+is used under its Creative Commons licence (CC BY 4.0). No third-party material
+requiring separate copyright clearance appears in the manuscript.
+
+------------------------------------------------------------------------
+WORD COUNT
+------------------------------------------------------------------------
+
+The total word count of the submission, including all body text, section headers,
+figure captions, notes, and references, is approximately 9,071 words.
+
+  Words in body text:            4,900
+  Words in section headers:        116
+  Words in captions/floats:        254
+  Cited references (38 entries): ~3,800 (estimated from PDF extraction)
+  -----------------------------------------------
+  Total (all inclusive):        ~9,071
+
+------------------------------------------------------------------------
+APC DISCOUNT OR WAIVER
+------------------------------------------------------------------------
+
+No APC discount or waiver is requested at this time. The corresponding author
+accepts responsibility for the standard Article Processing Charge upon acceptance.
+Should institutional open-access funding become available between submission and
+acceptance, the editors will be notified promptly.
+
+------------------------------------------------------------------------
+SPECIAL COLLECTION
+------------------------------------------------------------------------
+
+This manuscript is not being submitted to a Special Collection and should be
+assigned to the regular review queue at the editors' discretion.
+
+------------------------------------------------------------------------
+
+Thank you for considering this submission. We welcome any queries regarding
+the experimental pipeline, reproducibility, or data availability.
+
+Yours sincerely,
+
+J. Abimbola
+(corresponding author — contact details withheld pending blind review)
+
+------------------------------------------------------------------------

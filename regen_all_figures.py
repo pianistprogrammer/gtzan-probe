@@ -19,6 +19,12 @@ from src.gtzan_probe.config import (
     BAND_RANGES, setup_plotting, savefig,
 )
 
+GENRE_DISPLAY = {
+    "blues": "Blues", "classical": "Classical", "country": "Country",
+    "disco": "Disco", "hiphop": "Hip-hop", "jazz": "Jazz",
+    "metal": "Metal", "pop": "Pop", "reggae": "Reggae", "rock": "Rock",
+}
+
 ISMIR_FULL = 16.0
 
 setup_plotting()
@@ -135,7 +141,7 @@ for patch, genre in zip(bp["boxes"], GENRES):
     patch.set_facecolor(GENRE_COLORS[genre])
     patch.set_alpha(0.8)
 ax.set_xticks(range(1, 11))
-ax.set_xticklabels([g.capitalize() for g in GENRES], rotation=30, ha="right")
+ax.set_xticklabels([GENRE_DISPLAY.get(g, g.capitalize()) for g in GENRES], rotation=30, ha="right")
 ax.set_ylabel("Estimated Tempo (BPM)")
 ax.set_title("Tempo Distribution by Genre", fontweight="bold")
 savefig("01_tempo_boxplot", fig)
@@ -147,7 +153,7 @@ genre_mfcc = feat_df.groupby("genre")[mfcc_cols_mean].mean().reindex(GENRES)
 fig, ax = plt.subplots(figsize=(14, 7))
 sns.heatmap(
     genre_mfcc.T, ax=ax, cmap="coolwarm", center=0,
-    xticklabels=[g.capitalize() for g in GENRES],
+    xticklabels=[GENRE_DISPLAY.get(g, g.capitalize()) for g in GENRES],
     yticklabels=[f"MFCC-{i}" for i in range(20)],
     cbar_kws={"label": "Mean Coefficient Value"},
     annot=True, fmt=".1f", annot_kws={"fontsize": 7},
@@ -168,7 +174,7 @@ for i, genre in enumerate(GENRES):
     if genre in shap_results:
         axes_flat[i].imshow(shap_results[genre]["spectrogram"],
                             aspect="auto", origin="lower", cmap="magma")
-    axes_flat[i].set_title(genre.capitalize(), fontweight="bold", color=GENRE_COLORS[genre])
+    axes_flat[i].set_title(GENRE_DISPLAY.get(genre, genre.capitalize()), fontweight="bold", color=GENRE_COLORS[genre])
     axes_flat[i].set_xlabel("")
     axes_flat[i].set_ylabel("")
 fig.suptitle("Mel Spectrogram Gallery (one clip per genre)", fontweight="bold")
@@ -197,8 +203,8 @@ for ax, data, fmt, title in zip(
 ):
     sns.heatmap(
         data, ax=ax, annot=True, fmt=fmt,
-        xticklabels=[g.capitalize() for g in GENRES],
-        yticklabels=[g.capitalize() for g in GENRES],
+        xticklabels=[GENRE_DISPLAY.get(g, g.capitalize()) for g in GENRES],
+        yticklabels=[GENRE_DISPLAY.get(g, g.capitalize()) for g in GENRES],
         cmap="Blues", linewidths=0.5, cbar_kws={"shrink": 0.75},
     )
     ax.set_xlabel("Predicted", fontweight="bold")
@@ -225,7 +231,7 @@ metrics = ["Precision", "Recall", "F1-Score"]
 for i, (metric, color) in enumerate(zip(metrics, colors)):
     ax.bar(x + i * w, metrics_df[metric], w, label=metric, color=color, alpha=0.85, edgecolor="white")
 ax.set_xticks(x + w)
-ax.set_xticklabels([g.capitalize() for g in GENRES], rotation=30, ha="right")
+ax.set_xticklabels([GENRE_DISPLAY.get(g, g.capitalize()) for g in GENRES], rotation=30, ha="right")
 ax.set_ylabel("Score")
 ax.set_ylim(0, 1.1)
 ax.axhline(1.0, color="gray", linestyle=":", linewidth=0.8)
@@ -275,7 +281,7 @@ for i, genre in enumerate(available_shap):
     vmax = np.abs(sv).max()
     ax.imshow(res["spectrogram"], aspect="auto", origin="lower", cmap="gray_r", alpha=0.4)
     im = ax.imshow(sv, aspect="auto", origin="lower", cmap=shap_cmap, alpha=0.7, vmin=-vmax, vmax=vmax)
-    ax.set_title(genre.capitalize(), fontsize=14, fontweight="bold", color=GENRE_COLORS[genre])
+    ax.set_title(GENRE_DISPLAY.get(genre, genre.capitalize()), fontsize=14, fontweight="bold", color=GENRE_COLORS[genre])
     ax.set_xlabel("Time", fontsize=12)
     ax.set_ylabel("Mel bin", fontsize=12)
     ax.tick_params(labelsize=10)
@@ -300,7 +306,7 @@ for genre in available_shap:
 band_df_shap = pd.DataFrame(band_data_shap, index=band_names).T
 fig, ax = plt.subplots(figsize=(14, 7))
 band_df_shap.plot(kind="bar", ax=ax, colormap="viridis", edgecolor="white", linewidth=0.5)
-ax.set_xticklabels([g.capitalize() for g in available_shap], rotation=30, ha="right")
+ax.set_xticklabels([GENRE_DISPLAY.get(g, g.capitalize()) for g in available_shap], rotation=30, ha="right")
 ax.set_ylabel("Mean |SHAP| Attribution")
 ax.set_title("Mean Absolute SHAP per Frequency Band per Genre", fontweight="bold")
 ax.legend(title="Frequency Band")
@@ -329,7 +335,7 @@ for i, genre in enumerate(available_lime):
     mask = res["mask"].astype(float)
     vmax = max(np.abs(mask).max(), 1e-8)
     ax.imshow(mask, aspect="auto", origin="lower", cmap=lime_cmap, alpha=0.6, vmin=-vmax, vmax=vmax)
-    ax.set_title(genre.capitalize(), fontweight="bold", color=GENRE_COLORS[genre])
+    ax.set_title(GENRE_DISPLAY.get(genre, genre.capitalize()), fontweight="bold", color=GENRE_COLORS[genre])
     ax.set_xlabel("Time")
     ax.set_ylabel("Mel bin")
 
@@ -357,7 +363,7 @@ for genre in available_lime:
 band_df_lime = pd.DataFrame(band_data_lime, index=band_names).T
 fig, ax = plt.subplots(figsize=(14, 7))
 band_df_lime.plot(kind="bar", ax=ax, colormap="viridis", edgecolor="white", linewidth=0.5)
-ax.set_xticklabels([g.capitalize() for g in available_lime], rotation=30, ha="right")
+ax.set_xticklabels([GENRE_DISPLAY.get(g, g.capitalize()) for g in available_lime], rotation=30, ha="right")
 ax.set_ylabel("Mean |LIME| Attribution")
 ax.set_title("LIME Frequency Band Importance per Genre", fontweight="bold")
 ax.legend(title="Frequency Band")
@@ -381,7 +387,7 @@ for genre in avail_align:
         row_vals.append(sv[lo:hi, :].mean())
     heat_data.append(row_vals)
 
-heat_df = pd.DataFrame(heat_data, index=avail_align, columns=band_names)
+heat_df = pd.DataFrame(heat_data, index=[GENRE_DISPLAY.get(g, g.capitalize()) for g in avail_align], columns=band_names)
 sns.heatmap(heat_df, ax=ax, cmap="YlOrRd", annot=True, fmt=".3f",
             cbar_kws={"label": "Mean |SHAP|"})
 ax.set_title("Musicological Alignment: SHAP Attribution per Band", fontweight="bold")
@@ -421,7 +427,7 @@ metrics_plot = [
 for i, (col, label, color) in enumerate(metrics_plot):
     axes[0].bar(x + i * w, agree_df[col], w, label=label, color=color, alpha=0.85)
 axes[0].set_xticks(x + w)
-axes[0].set_xticklabels([g.capitalize() for g in agree_df["genre"]], rotation=30, ha="right")
+axes[0].set_xticklabels([GENRE_DISPLAY.get(g, g.capitalize()) for g in agree_df["genre"]], rotation=30, ha="right")
 axes[0].set_ylabel("Score")
 axes[0].set_title("A  SHAP vs LIME Agreement per Genre")
 axes[0].legend()
@@ -429,7 +435,7 @@ axes[0].legend()
 axes[1].scatter(agree_df["pearson_r"], agree_df["spearman_r"], s=100,
                 c=[GENRE_COLORS[g] for g in agree_df["genre"]], edgecolors="black", linewidth=1)
 for _, row in agree_df.iterrows():
-    axes[1].annotate(row["genre"], (row["pearson_r"], row["spearman_r"]),
+    axes[1].annotate(GENRE_DISPLAY.get(row["genre"], row["genre"].capitalize()), (row["pearson_r"], row["spearman_r"]),
                      fontsize=9, ha="left", va="bottom")
 axes[1].set_xlabel("Pearson r")
 axes[1].set_ylabel("Spearman ρ")
@@ -445,7 +451,7 @@ w = 0.35
 axes[0].bar(x - w / 2, spurious_df["silence_shap"], w, label="Silence regions", color="#F44336")
 axes[0].bar(x + w / 2, spurious_df["high_energy_shap"], w, label="High-energy regions", color="#4CAF50")
 axes[0].set_xticks(x)
-axes[0].set_xticklabels([g.capitalize() for g in spurious_df["genre"]], rotation=30, ha="right")
+axes[0].set_xticklabels([GENRE_DISPLAY.get(g, g.capitalize()) for g in spurious_df["genre"]], rotation=30, ha="right")
 axes[0].set_ylabel("Mean |SHAP|")
 axes[0].set_title("A  Attribution: Silence vs High-Energy")
 axes[0].legend()
@@ -453,7 +459,7 @@ axes[0].legend()
 axes[1].bar(x - w / 2, spurious_df["edge_shap"], w, label="Edge regions", color="#FF9800")
 axes[1].bar(x + w / 2, spurious_df["center_shap"], w, label="Center regions", color="#2196F3")
 axes[1].set_xticks(x)
-axes[1].set_xticklabels([g.capitalize() for g in spurious_df["genre"]], rotation=30, ha="right")
+axes[1].set_xticklabels([GENRE_DISPLAY.get(g, g.capitalize()) for g in spurious_df["genre"]], rotation=30, ha="right")
 axes[1].set_ylabel("Mean |SHAP|")
 axes[1].set_title("B  Attribution: Edge vs Center")
 axes[1].legend()
@@ -534,7 +540,7 @@ x_a = np.arange(len(alignment_df))
 colors_a = [GENRE_COLORS.get(g, "#999") for g in alignment_df["genre"]]
 ax_a.bar(x_a, alignment_df["spearman_r"], color=colors_a, edgecolor="white")
 ax_a.set_xticks(x_a)
-ax_a.set_xticklabels([g[:4].capitalize() for g in alignment_df["genre"]], rotation=45, ha="right", fontsize=8)
+ax_a.set_xticklabels([GENRE_DISPLAY.get(g, g.capitalize()) for g in alignment_df["genre"]], rotation=45, ha="right", fontsize=8)
 ax_a.set_ylabel("Spearman ρ")
 ax_a.set_title("A  Musicological Alignment", fontweight="bold")
 ax_a.axhline(0, color="black", linewidth=0.5)
@@ -555,7 +561,7 @@ x_c = np.arange(len(agree_df))
 ax_c.bar(x_c - w_c / 2, agree_df["pearson_r"], w_c, label="Pearson r", color="#2196F3")
 ax_c.bar(x_c + w_c / 2, agree_df["top10_iou"], w_c, label="Top-10% IoU", color="#F44336")
 ax_c.set_xticks(x_c)
-ax_c.set_xticklabels([g[:4].capitalize() for g in agree_df["genre"]], rotation=45, ha="right", fontsize=8)
+ax_c.set_xticklabels([GENRE_DISPLAY.get(g, g.capitalize()) for g in agree_df["genre"]], rotation=45, ha="right", fontsize=8)
 ax_c.set_ylabel("Score")
 ax_c.set_title("C  SHAP vs LIME Agreement", fontweight="bold")
 ax_c.legend(fontsize=8)
@@ -564,7 +570,7 @@ ax_d = fig.add_subplot(gs[1, 1])
 x_d = np.arange(len(spurious_df))
 ax_d.bar(x_d, spurious_df["silence_ratio"], color="#F44336", alpha=0.8, label="Silence/Signal ratio")
 ax_d.set_xticks(x_d)
-ax_d.set_xticklabels([g[:4].capitalize() for g in spurious_df["genre"]], rotation=45, ha="right", fontsize=8)
+ax_d.set_xticklabels([GENRE_DISPLAY.get(g, g.capitalize()) for g in spurious_df["genre"]], rotation=45, ha="right", fontsize=8)
 ax_d.set_ylabel("Ratio")
 ax_d.set_title("D  Spurious: Silence Attribution Ratio", fontweight="bold")
 

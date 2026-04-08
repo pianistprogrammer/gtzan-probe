@@ -24,6 +24,12 @@ from .config import (
     SR, N_MELS, N_FFT, HOP, BAND_RANGES, GT_BANDS, SEG_S,
     setup_plotting, savefig, get_device,
 )
+
+GENRE_DISPLAY = {
+    "blues": "Blues", "classical": "Classical", "country": "Country",
+    "disco": "Disco", "hiphop": "Hip-hop", "jazz": "Jazz",
+    "metal": "Metal", "pop": "Pop", "reggae": "Reggae", "rock": "Rock",
+}
 from .model import MusicCNN
 from .dataset import load_spectrogram
 
@@ -96,7 +102,7 @@ def main():
             row_vals.append(sv[lo:hi, :].mean())
         heat_data.append(row_vals)
 
-    heat_df = pd.DataFrame(heat_data, index=available, columns=band_names)
+    heat_df = pd.DataFrame(heat_data, index=[GENRE_DISPLAY.get(g, g.capitalize()) for g in available], columns=band_names)
     sns.heatmap(heat_df, ax=ax, cmap="YlOrRd", annot=True, fmt=".3f",
                 cbar_kws={"label": "Mean |SHAP|"})
     ax.set_title("Musicological Alignment: SHAP Attribution per Band", fontweight="bold")
@@ -226,7 +232,7 @@ def main():
         axes[0].bar(x + i * w, agree_df[col], w, label=label, color=color, alpha=0.85)
 
     axes[0].set_xticks(x + w)
-    axes[0].set_xticklabels([g.capitalize() for g in agree_df["genre"]], rotation=30, ha="right")
+    axes[0].set_xticklabels([GENRE_DISPLAY.get(g, g.capitalize()) for g in agree_df["genre"]], rotation=30, ha="right")
     axes[0].set_ylabel("Score")
     axes[0].set_title("A  SHAP vs LIME Agreement per Genre")
     axes[0].legend()
@@ -235,7 +241,7 @@ def main():
     axes[1].scatter(agree_df["pearson_r"], agree_df["spearman_r"], s=100,
                     c=[GENRE_COLORS[g] for g in agree_df["genre"]], edgecolors="black", linewidth=1)
     for _, row in agree_df.iterrows():
-        axes[1].annotate(row["genre"], (row["pearson_r"], row["spearman_r"]),
+        axes[1].annotate(GENRE_DISPLAY.get(row["genre"], row["genre"].capitalize()), (row["pearson_r"], row["spearman_r"]),
                          fontsize=9, ha="left", va="bottom")
     axes[1].set_xlabel("Pearson r")
     axes[1].set_ylabel("Spearman ρ")
@@ -288,7 +294,7 @@ def main():
     axes[0].bar(x - w / 2, spurious_df["silence_shap"], w, label="Silence regions", color="#F44336")
     axes[0].bar(x + w / 2, spurious_df["high_energy_shap"], w, label="High-energy regions", color="#4CAF50")
     axes[0].set_xticks(x)
-    axes[0].set_xticklabels([g.capitalize() for g in spurious_df["genre"]], rotation=30, ha="right")
+    axes[0].set_xticklabels([GENRE_DISPLAY.get(g, g.capitalize()) for g in spurious_df["genre"]], rotation=30, ha="right")
     axes[0].set_ylabel("Mean |SHAP|")
     axes[0].set_title("A  Attribution: Silence vs High-Energy")
     axes[0].legend()
@@ -296,7 +302,7 @@ def main():
     axes[1].bar(x - w / 2, spurious_df["edge_shap"], w, label="Edge regions", color="#FF9800")
     axes[1].bar(x + w / 2, spurious_df["center_shap"], w, label="Center regions", color="#2196F3")
     axes[1].set_xticks(x)
-    axes[1].set_xticklabels([g.capitalize() for g in spurious_df["genre"]], rotation=30, ha="right")
+    axes[1].set_xticklabels([GENRE_DISPLAY.get(g, g.capitalize()) for g in spurious_df["genre"]], rotation=30, ha="right")
     axes[1].set_ylabel("Mean |SHAP|")
     axes[1].set_title("B  Attribution: Edge vs Center")
     axes[1].legend()

@@ -1,8 +1,6 @@
-https://allegro.pl/produkt/kosiarka-akumulatorowa-nac-20v-37-cm-lb40-37-2b40-s-8f2c37b8-b8df-4e26-90d8-e3a9647d13b9?offerId=18263719654% ──────────────────────────────────────────────────────────────
 % BibTeX references for GTZAN-Probe TISMIR paper
 % ──────────────────────────────────────────────────────────────
 
-% --- GTZAN dataset ---
 @inproceedings{Tzanetakis2002,
   author    = {G. Tzanetakis and P. Cook},
   title     = {Musical genre classification of audio signals},
@@ -13,12 +11,11 @@ https://allegro.pl/produkt/kosiarka-akumulatorowa-nac-20v-37-cm-lb40-37-2b40-s-8
   year      = {2002},
   doi       = {10.1109/TSA.2002.800560}
 }
-
-@inproceedings{Sturm2013,
-  author    = {B. L. Sturm},
-  title     = {The {GTZAN} dataset: Its contents, its faults, their effects on evaluation, and its future use},
-  booktitle = {arXiv preprint arXiv:1306.1461},
-  year      = {2013}
+@article{sturm2013gtzan,
+  title={The GTZAN dataset: Its contents, its faults, their effects on evaluation, and its future use},
+  author={Sturm, Bob L},
+  journal={arXiv preprint arXiv:1306.1461},
+  year={2013}
 }
 
 @article{Sturm2014,
@@ -193,6 +190,27 @@ https://allegro.pl/produkt/kosiarka-akumulatorowa-nac-20v-37-cm-lb40-37-2b40-s-8
   doi       = {10.1109/ICCV.2017.74}
 }
 
+% --- Saliency reliability checks ---
+@inproceedings{Adebayo2018,
+  author    = {Julius Adebayo and Justin Gilmer and Michael Muelly and Ian Goodfellow and Moritz Hardt and Been Kim},
+  title     = {Sanity checks for saliency maps},
+  booktitle = {Advances in Neural Information Processing Systems},
+  volume    = {31},
+  year      = {2018}
+}
+
+% --- Spurious shortcut behavior in high-accuracy models ---
+@article{Lapuschkin2019,
+  author  = {Sebastian Lapuschkin and Stephan W{\"a}ldchen and Alexander Binder and Gr{\'e}goire Montavon and Wojciech Samek and Klaus-Robert M{\"u}ller},
+  title   = {Unmasking Clever Hans predictors and assessing what machines really learn},
+  journal = {Nature Communications},
+  volume  = {10},
+  number  = {1},
+  pages   = {1096},
+  year    = {2019},
+  doi     = {10.1038/s41467-019-08987-4}
+}
+
 % --- Music genre classification survey ---
 @article{Fu2011,
   author  = {Z. Fu and G. Lu and K. M. Ting and D. Zhang},
@@ -315,4 +333,66 @@ https://allegro.pl/produkt/kosiarka-akumulatorowa-nac-20v-37-cm-lb40-37-2b40-s-8
   pages   = {371--406},
   year    = {2016},
   doi     = {10.1007/s10844-013-0250-y}
+}
+
+% --- Early genre classification baseline ---
+@inproceedings{Li2003,
+  author    = {T. Li and M. Ogihara and Q. Li},
+  title     = {A comparative study on content-based music genre classification},
+  booktitle = {Proc. of the 26th Annual International ACM SIGIR Conference on Research and Development in Information Retrieval},
+  pages     = {282--289},
+  year      = {2003},
+  doi       = {10.1145/860435.860487}
+}
+
+% --- Shortcut learning ---
+@article{Geirhos2020,
+  author  = {R. Geirhos and J.-H. Jacobsen and C. Michaelis and R. Zemel and W. Brendel and M. Bethge and F. A. Wichmann},
+  title   = {Shortcut learning in deep neural networks},
+  journal = {Nature Machine Intelligence},
+  volume  = {2},
+  number  = {11},
+  pages   = {665--673},
+  year    = {2020},
+  doi     = {10.1038/s42256-020-00257-z}
+}
+
+% --- Artist filter effect ---
+@inproceedings{Flexer2007,
+  author    = {A. Flexer},
+  title     = {A closer look on artist filters for musical genre classification},
+  booktitle = {Proc. of the 8th International Society for Music Information Retrieval Conference},
+  pages     = {341--344},
+  year      = {2007}
+}
+
+% --- Dataset bias ---
+@inproceedings{Torralba2011,
+  author    = {A. Torralba and A. A. Efros},
+  title     = {Unbiased look at dataset bias},
+  booktitle = {Proc. of the IEEE Conference on Computer Vision and Pattern Recognition},
+  pages     = {1521--1528},
+  year      = {2011},
+  doi       = {10.1109/CVPR.2011.5995347}
+}
+
+% --- SLIC superpixels ---
+@article{Achanta2012,
+  author  = {R. Achanta and A. Shaji and K. Smith and A. Lucchi and P. Fua and S. S{\"u}sstrunk},
+  title   = {SLIC superpixels compared to state-of-the-art superpixel methods},
+  journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  volume  = {34},
+  number  = {11},
+  pages   = {2274--2282},
+  year    = {2012},
+  doi     = {10.1109/TPAMI.2012.120}
+}
+
+% --- FMA dataset ---
+@inproceedings{Defferrard2017,
+  author    = {M. Defferrard and K. Benzi and P. Vandergheynst and X. Bresson},
+  title     = {{FMA}: A dataset for music analysis},
+  booktitle = {Proc. of the 18th International Society for Music Information Retrieval Conference},
+  pages     = {316--323},
+  year      = {2017}
 }

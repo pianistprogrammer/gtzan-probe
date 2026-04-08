@@ -1,10 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.18)  7 APR 2026 17:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.18)  8 APR 2026 14:18
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
-**/Volumes/AI/gtzan-probe/Paper/paper.tex
-(/Volumes/AI/gtzan-probe/Paper/paper.tex
+**paper.tex
+(./paper.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (/usr/local/texlive/2026/texmf-dist/tex/latex/base/article.cls
@@ -23,25 +22,33 @@ File: size10.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
 \abovecaptionskip=\skip49
 \belowcaptionskip=\skip50
 \bibindent=\dimen148
-) (/usr/local/texlive/2026/texmf-dist/tex/latex/base/fontenc.sty
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
-) (/usr/local/texlive/2026/texmf-dist/tex/latex/base/inputenc.sty
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2024/02/08 v1.3d Input encoding file
 \inpenc@prehook=\toks17
 \inpenc@posthook=\toks18
-) (./ismir.sty (/usr/local/texlive/2026/texmf-dist/tex/latex/lineno/lineno.sty
+) (./ismir.sty
+(/usr/local/texlive/2026/texmf-dist/tex/latex/lineno/lineno.sty
 Package: lineno 2026/02/16 line numbers on paragraphs v5.7
- (/usr/local/texlive/2026/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count283
-) (/usr/local/texlive/2026/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
- (/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/keyval.sty
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \KV@toks@=\toks19
-) (/usr/local/texlive/2026/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+)
+(/usr/local/texlive/2026/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
-) (/usr/local/texlive/2026/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
 ))
 \linenopenalty=\count284
@@ -58,21 +65,25 @@ Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
 \bframerule=\dimen152
 \bframesep=\dimen153
 \bframebox=\box53
-)) (/usr/local/texlive/2026/texmf-dist/tex/latex/amsmath/amsmath.sty
+))
+(/usr/local/texlive/2026/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2025/07/09 v2.17z AMS math features
 \@mathmargin=\skip51
 
 For additional information on amsmath, use the `?' option.
 (/usr/local/texlive/2026/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2024/11/17 v2.01 AMS text
- (/usr/local/texlive/2026/texmf-dist/tex/latex/amsmath/amsgen.sty
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks21
 \ex@=\dimen154
-)) (/usr/local/texlive/2026/texmf-dist/tex/latex/amsmath/amsbsy.sty
+))
+(/usr/local/texlive/2026/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen155
-) (/usr/local/texlive/2026/texmf-dist/tex/latex/amsmath/amsopn.sty
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
 \inf@bad=\count291
@@ -131,28 +142,37 @@ Package: cite 2015/02/27  v 5.5
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip18
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
-) (/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/graphicx.sty
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
- (/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/graphics.sty
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
- (/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/trig.sty
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
-) (/usr/local/texlive/2026/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 106.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/graphics-def/pdftex.def
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/graphics-def/pdftex.def
 File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen163
 \Gin@req@width=\dimen164
-) (/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/color.sty
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2025/01/14 v1.3e Standard LaTeX Color (DPC)
- (/usr/local/texlive/2026/texmf-dist/tex/latex/graphics-cfg/color.cfg
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 149.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/mathcolor.ltx)) (/usr/local/texlive/2026/texmf-dist/tex/latex/booktabs/booktabs.sty
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/mathcolor.ltx))
+(/usr/local/texlive/2026/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \heavyrulewidth=\dimen165
 \lightrulewidth=\dimen166
@@ -171,39 +191,49 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@thisruleclass=\count306
 \@lastruleclass=\count307
 \@thisrulewidth=\dimen177
-) (/usr/local/texlive/2026/texmf-dist/tex/latex/multirow/multirow.sty
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/multirow/multirow.sty
 Package: multirow 2024/11/12 v2.9 Span multiple rows of a table
 \multirow@colwidth=\skip54
 \multirow@cntb=\count308
 \multirow@dima=\skip55
 \bigstrutjot=\dimen178
-) (/usr/local/texlive/2026/texmf-dist/tex/latex/tools/xspace.sty
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/tools/xspace.sty
 Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 )
-LaTeX Font Info:    Trying to load font information for T1+ptm on input line 26.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/t1ptm.fd
+(/usr/local/texlive/2026/texmf-dist/tex/latex/placeins/placeins.sty
+Package: placeins 2005/04/18  v 2.2
+)
+LaTeX Font Info:    Trying to load font information for T1+ptm on input line 27
+.
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
-) (/usr/local/texlive/2026/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count309
-) (./paper.aux)
+)
+(./paper.aux)
 \openout1 = `paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
- (/usr/local/texlive/2026/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+
+(/usr/local/texlive/2026/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count310
 \scratchdimen=\dimen179
@@ -218,164 +248,214 @@ LaTeX Font Info:    ... okay on input line 26.
 \everyMPtoPDFconversion=\toks27
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
-Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
 ))
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 28.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/t1pcr.fd
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 29
+.
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
 <cc_by.pdf, id=1, 121.45375pt x 43.16125pt>
 File: cc_by.pdf Graphic file (type pdf)
 <use cc_by.pdf>
-Package pdftex.def Info: cc_by.pdf  used on input line 28.
+Package pdftex.def Info: cc_by.pdf  used on input line 29.
 (pdftex.def)             Requested size: 36.02869pt x 12.80365pt.
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 28.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 2
+9.
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
-LaTeX Font Info:    Trying to load font information for T1+phv on input line 30.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/t1phv.fd
+LaTeX Font Info:    Trying to load font information for T1+phv on input line 31
+.
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
-) [1{/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc}
+) [1{/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr
+/local/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 
 
  <./cc_by.pdf>]
+Underfull \hbox (badness 1102) in paragraph at lines 55--56
+[]\T1/ptm/m/n/10 The con-tri-bu-tions of this pa-per are as fol-lows: a
+ []
 
-LaTeX Warning: Citation `Li2003' on page 2 undefined on input line 60.
+
+Underfull \hbox (badness 1127) in paragraph at lines 55--56
+\T1/ptm/m/n/10 multi-method ex-plain-abil-ity pipeline com-bin-ing SHAP
+ []
 
 
-Underfull \hbox (badness 2012) in paragraph at lines 62--63
+Underfull \hbox (badness 2012) in paragraph at lines 63--64
 \T1/ptm/m/n/10 proaches that learn rep-re-sen-ta-tions di-rectly from au-
  []
 
-
-LaTeX Warning: Citation `Geirhos2020' on page 2 undefined on input line 70.
-
-
-LaTeX Warning: Citation `Flexer2007' on page 2 undefined on input line 72.
-
-
-LaTeX Warning: Citation `Torralba2011' on page 2 undefined on input line 72.
-
 [2] [3]
-Underfull \hbox (badness 1092) in paragraph at lines 128--129
+Underfull \hbox (badness 1092) in paragraph at lines 133--134
 []\T1/ptm/m/n/10 A two-phase fine-tuning strat-egy is em-ployed: 10
  []
 
-
-Underfull \hbox (badness 1194) in paragraph at lines 174--175
-\T1/ptm/m/n/10 ([]). Clas-si-cal and jazz are clas-si-fied per-fectly
- []
-
-<02_confusion_matrix.pdf, id=28, 1377.84966pt x 567.9694pt>
+[4]
+<02_confusion_matrix.pdf, id=34, 1377.84966pt x 567.9694pt>
 File: 02_confusion_matrix.pdf Graphic file (type pdf)
 <use 02_confusion_matrix.pdf>
-Package pdftex.def Info: 02_confusion_matrix.pdf  used on input line 204.
+Package pdftex.def Info: 02_confusion_matrix.pdf  used on input line 194.
 (pdftex.def)             Requested size: 352.35951pt x 145.24194pt.
-[4]
-<FINAL_01_shap_hero.pdf, id=35, 1144.71414pt x 426.3033pt>
+
+Underfull \hbox (badness 1226) in paragraph at lines 201--202
+\T1/ptm/m/n/10 SHAP at-tri-bu-tion over-lays for rep-re-sen-ta-tive cor-rectly
+ []
+
+<FINAL_01_shap_hero.pdf, id=35, 1041.31061pt x 421.20422pt>
 File: FINAL_01_shap_hero.pdf Graphic file (type pdf)
 <use FINAL_01_shap_hero.pdf>
-Package pdftex.def Info: FINAL_01_shap_hero.pdf  used on input line 215.
-(pdftex.def)             Requested size: 464.91652pt x 173.13974pt.
+Package pdftex.def Info: FINAL_01_shap_hero.pdf  used on input line 205.
+(pdftex.def)             Requested size: 464.91652pt x 188.0555pt.
 <03_shap_frequency_bands.pdf, id=36, 1000.15405pt x 494.25777pt>
 File: 03_shap_frequency_bands.pdf Graphic file (type pdf)
 <use 03_shap_frequency_bands.pdf>
-Package pdftex.def Info: 03_shap_frequency_bands.pdf  used on input line 224.
+Package pdftex.def Info: 03_shap_frequency_bands.pdf  used on input line 214.
 (pdftex.def)             Requested size: 464.91652pt x 229.75206pt.
 <04_lime_gallery.pdf, id=37, 1439.83575pt x 497.09589pt>
 File: 04_lime_gallery.pdf Graphic file (type pdf)
 <use 04_lime_gallery.pdf>
-Package pdftex.def Info: 04_lime_gallery.pdf  used on input line 235.
+Package pdftex.def Info: 04_lime_gallery.pdf  used on input line 225.
 (pdftex.def)             Requested size: 464.91652pt x 160.5075pt.
-<FINAL_02_quantitative_panel.pdf, id=38, 968.11375pt x 607.50487pt>
+<FINAL_02_quantitative_panel.pdf, id=38, 968.11375pt x 617.56343pt>
 File: FINAL_02_quantitative_panel.pdf Graphic file (type pdf)
 <use FINAL_02_quantitative_panel.pdf>
-Package pdftex.def Info: FINAL_02_quantitative_panel.pdf  used on input line 244.
-(pdftex.def)             Requested size: 479.59755pt x 300.95221pt.
+Package pdftex.def Info: FINAL_02_quantitative_panel.pdf  used on input line 23
+4.
+(pdftex.def)             Requested size: 479.59755pt x 305.93512pt.
+
+Underfull \hbox (badness 1043) in paragraph at lines 241--242
+\T1/ptm/m/n/10 (clas-si-cal), con-firm-ing that SHAP iden-ti-fies gen-uinely
+ []
+
 <05_faithfulness_curves.pdf, id=39, 1144.67714pt x 426.27129pt>
 File: 05_faithfulness_curves.pdf Graphic file (type pdf)
 <use 05_faithfulness_curves.pdf>
-Package pdftex.def Info: 05_faithfulness_curves.pdf  used on input line 255.
+Package pdftex.def Info: 05_faithfulness_curves.pdf  used on input line 245.
 (pdftex.def)             Requested size: 464.91652pt x 173.13326pt.
-<05_musicological_alignment.pdf, id=40, 696.0404pt x 421.97775pt>
-File: 05_musicological_alignment.pdf Graphic file (type pdf)
-<use 05_musicological_alignment.pdf>
-Package pdftex.def Info: 05_musicological_alignment.pdf  used on input line 312.
-(pdftex.def)             Requested size: 221.64624pt x 134.37244pt.
 
-Underfull \hbox (badness 1142) in paragraph at lines 325--326
-[] \T1/ptm/m/n/10 and [] quan-tify the agree-ment be-tween
+Underfull \hbox (badness 1701) in paragraph at lines 254--255
+\T1/ptm/m/n/10 rank-ings and mu-si-co-log-i-cal ex-pec-ta-tions is shown in
  []
 
-[5 <./02_confusion_matrix.pdf>]
-<05_method_agreement.pdf, id=63, 1140.1665pt x 426.3635pt>
+[5]
+
+LaTeX Warning: Text page 6 contains only floats.
+
+
+Overfull \vbox (7.66978pt too high) has occurred while \output is active []
+
+
+
+LaTeX Warning: Text page 6 contains only floats.
+
+
+Overfull \vbox (7.66978pt too high) has occurred while \output is active []
+
+
+[6 <./02_confusion_matrix.pdf> <./FINAL_01_shap_hero.pdf> <./03_shap_frequency_
+bands.pdf>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [7 <./04_lime_gallery.pdf> <./FINAL_02_quantitative_panel.pdf>]
+<05_musicological_alignment.pdf, id=222, 696.29219pt x 421.97775pt>
+File: 05_musicological_alignment.pdf Graphic file (type pdf)
+<use 05_musicological_alignment.pdf>
+Package pdftex.def Info: 05_musicological_alignment.pdf  used on input line 272
+.
+(pdftex.def)             Requested size: 239.8025pt x 145.32492pt.
+<07_fma_gtzan_correlation.pdf, id=223, 711.00446pt x 313.36613pt>
+File: 07_fma_gtzan_correlation.pdf Graphic file (type pdf)
+<use 07_fma_gtzan_correlation.pdf>
+Package pdftex.def Info: 07_fma_gtzan_correlation.pdf  used on input line 276.
+(pdftex.def)             Requested size: 239.8025pt x 105.68716pt.
+<05_method_agreement.pdf, id=224, 1140.14862pt x 426.3635pt>
 File: 05_method_agreement.pdf Graphic file (type pdf)
 <use 05_method_agreement.pdf>
-Package pdftex.def Info: 05_method_agreement.pdf  used on input line 351.
-(pdftex.def)             Requested size: 464.91652pt x 173.8538pt.
-<05_spurious_correlation.pdf, id=64, 1144.69662pt x 426.3635pt>
+Package pdftex.def Info: 05_method_agreement.pdf  used on input line 288.
+(pdftex.def)             Requested size: 464.91652pt x 173.8603pt.
+<05_spurious_correlation.pdf, id=225, 1144.69662pt x 426.3635pt>
 File: 05_spurious_correlation.pdf Graphic file (type pdf)
 <use 05_spurious_correlation.pdf>
-Package pdftex.def Info: 05_spurious_correlation.pdf  used on input line 386.
+Package pdftex.def Info: 05_spurious_correlation.pdf  used on input line 301.
 (pdftex.def)             Requested size: 464.91652pt x 173.1642pt.
+<06_attention_gallery.pdf, id=226, 1433.75958pt x 426.27129pt>
+File: 06_attention_gallery.pdf Graphic file (type pdf)
+<use 06_attention_gallery.pdf>
+Package pdftex.def Info: 06_attention_gallery.pdf  used on input line 316.
+(pdftex.def)             Requested size: 464.91652pt x 138.2243pt.
+ [8 <./05_faithfulness_curves.pdf>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Overfull \hbox (95.62639pt too wide) in paragraph at lines 401--417
- [][] 
+
+Underfull \vbox (badness 3407) has occurred while \output is active []
+
+ [9 <./05_musicological_alignment.pdf> <./07_fma_gtzan_correlation.pdf> <./05_m
+ethod_agreement.pdf> <./05_spurious_correlation.pdf>]
+Underfull \hbox (badness 1009) in paragraph at lines 345--346
+[]\T1/ptm/m/n/10 The cross-dataset anal-y-sis is also lim-ited in scope
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [6 <./FINAL_01_shap_hero.pdf> <./03_shap_frequency_bands.pdf>]
-<06_attention_gallery.pdf, id=138, 1433.75958pt x 426.27129pt>
-File: 06_attention_gallery.pdf Graphic file (type pdf)
-<use 06_attention_gallery.pdf>
-Package pdftex.def Info: 06_attention_gallery.pdf  used on input line 425.
-(pdftex.def)             Requested size: 464.91652pt x 138.2243pt.
- [7 <./04_lime_gallery.pdf>] [8 <./FINAL_02_quantitative_panel.pdf>]
-Underfull \hbox (badness 1158) in paragraph at lines 462--463
-\T1/ptm/m/n/10 The pipeline con-sists of eight se-quen-tial scripts cov-
+ [10 <./06_attention_gallery.pdf>]
+Underfull \hbox (badness 1092) in paragraph at lines 357--359
+\T1/ptm/m/n/10 dataset-induced short-cuts in GTZAN and also shows,
  []
 
-
-Underfull \hbox (badness 3148) in paragraph at lines 462--463
-\T1/ptm/m/n/10 er-ing dataset prepa-ra-tion, CNN train-ing, eval-u-a-tion,
- []
-
-[9 <./05_faithfulness_curves.pdf> <./05_musicological_alignment.pdf>] (./paper.bbl [10 <./05_method_agreement.pdf> <./05_spurious_correlation.pdf>]
-Underfull \hbox (badness 1472) in paragraph at lines 87--88
+(./paper.bbl [11]
+Underfull \hbox (badness 1472) in paragraph at lines 168--171
 []\T1/ptm/m/n/10 B. McFee, C. Raf-fel, D. Liang, D. P. W. El-lis,
  []
 
-[11 <./06_attention_gallery.pdf>]) [12
 
-] (./paper.aux)
+Underfull \hbox (badness 2334) in paragraph at lines 221--224
+[]\T1/ptm/m/n/10 M. Def-fer-rard, K. Benzi, P. Van-dergheynst, and
+ []
+
+) [12] (./paper.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
  ) 
 Here is how much of TeX's memory you used:
- 4074 strings out of 467525
- 62520 string characters out of 5418982
- 491571 words of memory out of 5000000
- 32909 multiletter control sequences out of 15000+600000
- 675009 words of font info for 91 fonts, out of 8000000 for 9000
+ 4104 strings out of 467525
+ 63349 string characters out of 5418982
+ 492265 words of memory out of 5000000
+ 32937 multiletter control sequences out of 15000+600000
+ 674388 words of font info for 89 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 72i,14n,79p,1444b,421s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (12 pages, 1718122 bytes).
+ 72i,14n,79p,1410b,421s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
+</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
+/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></u
+sr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
+/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/lo
+cal/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/loc
+al/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local
+/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive
+/2026/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2026/t
+exmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026/texmf-dist/
+fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type
+1/urw/times/utmri8a.pfb>
+Output written on paper.pdf (12 pages, 1950669 bytes).
 PDF statistics:
- 414 PDF objects out of 1000 (max. 8388607)
- 216 compressed objects within 3 object streams
+ 432 PDF objects out of 1000 (max. 8388607)
+ 226 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
- 56 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 61 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -14,3 +14,7 @@ data/
 *.csv
 figures/
 Paper/
+
+# Trained model files (too large for GitHub; store separately)
+models/*.pt
+models/*.pkl

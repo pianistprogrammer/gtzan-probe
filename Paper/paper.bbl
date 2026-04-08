@@ -7,7 +7,8 @@
 \providecommand{\BIBentrySTDinterwordspacing}{\spaceskip=0pt\relax}
 \providecommand{\BIBentryALTinterwordstretchfactor}{4}
 \providecommand{\BIBentryALTinterwordspacing}{\spaceskip=\fontdimen2\font plus
-\BIBentryALTinterwordstretchfactor\fontdimen3\font minus \fontdimen4\font\relax}
+\BIBentryALTinterwordstretchfactor\fontdimen3\font minus
+  \fontdimen4\font\relax}
 \providecommand{\BIBforeignlanguage}[2]{{%
 \expandafter\ifx\csname l@#1\endcsname\relax
 \typeout{** WARNING: IEEEtran.bst: No hyphenation pattern has been}%
@@ -21,93 +22,204 @@
 \BIBdecl
 
 \bibitem{Tzanetakis2002}
-G.~Tzanetakis and P.~Cook, ``Musical genre classification of audio signals,'' in \emph{IEEE Trans. on Speech and Audio Processing}, vol.~10, no.~5, 2002, pp. 293--302.
+G.~Tzanetakis and P.~Cook, ``Musical genre classification of audio signals,''
+  in \emph{IEEE Trans. on Speech and Audio Processing}, vol.~10, no.~5, 2002,
+  pp. 293--302.
 
 \bibitem{Lim2025}
-J.~Lim, S.~Kim \emph{et~al.}, ``Music genre classification using deep neural networks and data augmentation,'' \emph{Entertainment Computing}, vol.~52, 2025.
+J.~Lim, S.~Kim \emph{et~al.}, ``Music genre classification using deep neural
+  networks and data augmentation,'' \emph{Entertainment Computing}, vol.~52,
+  2025.
 
 \bibitem{Nanni2023}
-L.~Nanni, S.~Brahnam, and A.~Lumini, ``Novel mathematical model for classification of music genres,'' \emph{Journal of Big Data}, vol.~10, no.~1, pp. 1--20, 2023.
+L.~Nanni, S.~Brahnam, and A.~Lumini, ``Novel mathematical model for
+  classification of music genres,'' \emph{Journal of Big Data}, vol.~10, no.~1,
+  pp. 1--20, 2023.
 
 \bibitem{Sturm2016}
-B.~L. Sturm, ``Classification accuracy is not enough: On the evaluation of music genre recognition systems,'' \emph{Journal of Intelligent Information Systems}, vol.~41, no.~3, pp. 371--406, 2016.
+B.~L. Sturm, ``Classification accuracy is not enough: On the evaluation of
+  music genre recognition systems,'' \emph{Journal of Intelligent Information
+  Systems}, vol.~41, no.~3, pp. 371--406, 2016.
 
-\bibitem{Sturm2013}
-------, ``The {GTZAN} dataset: Its contents, its faults, their effects on evaluation, and its future use,'' in \emph{arXiv preprint arXiv:1306.1461}, 2013.
+\bibitem{sturm2013gtzan}
+------, ``The gtzan dataset: Its contents, its faults, their effects on
+  evaluation, and its future use,'' \emph{arXiv preprint arXiv:1306.1461},
+  2013.
 
 \bibitem{Fu2011}
-Z.~Fu, G.~Lu, K.~M. Ting, and D.~Zhang, ``A survey of audio-based music classification and annotation,'' \emph{IEEE Trans. on Multimedia}, vol.~13, no.~2, pp. 303--319, 2011.
+Z.~Fu, G.~Lu, K.~M. Ting, and D.~Zhang, ``A survey of audio-based music
+  classification and annotation,'' \emph{IEEE Trans. on Multimedia}, vol.~13,
+  no.~2, pp. 303--319, 2011.
+
+\bibitem{Geirhos2020}
+R.~Geirhos, J.-H. Jacobsen, C.~Michaelis, R.~Zemel, W.~Brendel, M.~Bethge, and
+  F.~A. Wichmann, ``Shortcut learning in deep neural networks,'' \emph{Nature
+  Machine Intelligence}, vol.~2, no.~11, pp. 665--673, 2020.
+
+\bibitem{Lapuschkin2019}
+S.~Lapuschkin, S.~W{\"a}ldchen, A.~Binder, G.~Montavon, W.~Samek, and K.-R.
+  M{\"u}ller, ``Unmasking clever hans predictors and assessing what machines
+  really learn,'' \emph{Nature Communications}, vol.~10, no.~1, p. 1096, 2019.
 
 \bibitem{Arrieta2020}
-A.~B. Arrieta, N.~D{\'i}az-Rodr{\'i}guez, J.~{Del Ser}, A.~Bennetot, S.~Tabik, A.~Barbado, S.~Garc{\'i}a, S.~Gil-L{\'o}pez, D.~Molina, R.~Benjamins, R.~Chatila, and F.~Herrera, ``Explainable artificial intelligence ({XAI}): Concepts, taxonomies, opportunities and challenges toward responsible {AI},'' \emph{Information Fusion}, vol.~58, pp. 82--115, 2020.
+A.~B. Arrieta, N.~D{\'i}az-Rodr{\'i}guez, J.~{Del Ser}, A.~Bennetot, S.~Tabik,
+  A.~Barbado, S.~Garc{\'i}a, S.~Gil-L{\'o}pez, D.~Molina, R.~Benjamins,
+  R.~Chatila, and F.~Herrera, ``Explainable artificial intelligence ({XAI}):
+  Concepts, taxonomies, opportunities and challenges toward responsible {AI},''
+  \emph{Information Fusion}, vol.~58, pp. 82--115, 2020.
 
 \bibitem{Mishra2017}
-S.~Mishra, B.~L. Sturm, and S.~Dixon, ``Local interpretable model-agnostic explanations for music content analysis,'' in \emph{Proc. of the 18th Int. Society for Music Information Retrieval Conf.}, Suzhou, China, 2017, pp. 537--543.
+S.~Mishra, B.~L. Sturm, and S.~Dixon, ``Local interpretable model-agnostic
+  explanations for music content analysis,'' in \emph{Proc. of the 18th Int.
+  Society for Music Information Retrieval Conf.}, Suzhou, China, 2017, pp.
+  537--543.
 
 \bibitem{Haunschmid2020}
-V.~Haunschmid, E.~Manilow, and G.~Widmer, ``{audioLIME}: Listenable explanations using source separation,'' in \emph{Proc. of the 11th Int. Conf. on Computational Creativity}, Coimbra, Portugal, 2020.
+V.~Haunschmid, E.~Manilow, and G.~Widmer, ``{audioLIME}: Listenable
+  explanations using source separation,'' in \emph{Proc. of the 11th Int. Conf.
+  on Computational Creativity}, Coimbra, Portugal, 2020.
 
 \bibitem{Sturm2014}
-B.~L. Sturm, ``A simple method to determine if a music information retrieval system is a "horse",'' \emph{IEEE Trans. on Multimedia}, vol.~16, no.~6, pp. 1636--1644, 2014.
+B.~L. Sturm, ``A simple method to determine if a music information retrieval
+  system is a "horse",'' \emph{IEEE Trans. on Multimedia}, vol.~16, no.~6, pp.
+  1636--1644, 2014.
+
+\bibitem{Li2003}
+T.~Li, M.~Ogihara, and Q.~Li, ``A comparative study on content-based music
+  genre classification,'' in \emph{Proc. of the 26th Annual International ACM
+  SIGIR Conference on Research and Development in Information Retrieval}, 2003,
+  pp. 282--289.
 
 \bibitem{Dieleman2014}
-S.~Dieleman and B.~Schrauwen, ``End-to-end learning for music audio,'' in \emph{Proc. of the IEEE Int. Conf. on Acoustics, Speech and Signal Processing}, 2014, pp. 6964--6968.
+S.~Dieleman and B.~Schrauwen, ``End-to-end learning for music audio,'' in
+  \emph{Proc. of the IEEE Int. Conf. on Acoustics, Speech and Signal
+  Processing}, 2014, pp. 6964--6968.
 
 \bibitem{Choi2017}
-K.~Choi, G.~Fazekas, M.~Sandler, and K.~Cho, ``Convolutional recurrent neural networks for music classification,'' \emph{Proc. of the IEEE Int. Conf. on Acoustics, Speech and Signal Processing}, pp. 2392--2396, 2017.
+K.~Choi, G.~Fazekas, M.~Sandler, and K.~Cho, ``Convolutional recurrent neural
+  networks for music classification,'' \emph{Proc. of the IEEE Int. Conf. on
+  Acoustics, Speech and Signal Processing}, pp. 2392--2396, 2017.
 
 \bibitem{Palanisamy2020}
-K.~Palanisamy, D.~Singhania, and A.~Yao, ``Rethinking {CNN} models for audio classification,'' in \emph{arXiv preprint arXiv:2007.11154}, 2020.
+K.~Palanisamy, D.~Singhania, and A.~Yao, ``Rethinking {CNN} models for audio
+  classification,'' in \emph{arXiv preprint arXiv:2007.11154}, 2020.
 
 \bibitem{Gong2021}
-Y.~Gong, Y.-A. Chung, and J.~Glass, ``{AST}: Audio spectrogram transformer,'' in \emph{Proc. of Interspeech}, 2021.
+Y.~Gong, Y.-A. Chung, and J.~Glass, ``{AST}: Audio spectrogram transformer,''
+  in \emph{Proc. of Interspeech}, 2021.
 
 \bibitem{Li2024}
-Y.~Li, R.~Yuan, G.~Zhang, Y.~Ma, X.~Chen, H.~Yin, C.~Zhuo, C.~Liu, X.~Liang, Z.~Lin, M.~A. Martins, W.~Shi, H.-W. Dong, Y.~Wang, Z.~Chen, J.~Fu, R.~B. Dannenberg, Q.~Kong, J.~Xu, W.~Chao, W.~Yang, M.~Benetos, F.~Xia, J.~Shi, and J.~Liu, ``{MERT}: Acoustic music understanding model with large-scale self-supervised training,'' in \emph{Proc. of the Int. Conf. on Learning Representations}, 2024.
+Y.~Li, R.~Yuan, G.~Zhang, Y.~Ma, X.~Chen, H.~Yin, C.~Zhuo, C.~Liu, X.~Liang,
+  Z.~Lin, M.~A. Martins, W.~Shi, H.-W. Dong, Y.~Wang, Z.~Chen, J.~Fu, R.~B.
+  Dannenberg, Q.~Kong, J.~Xu, W.~Chao, W.~Yang, M.~Benetos, F.~Xia, J.~Shi, and
+  J.~Liu, ``{MERT}: Acoustic music understanding model with large-scale
+  self-supervised training,'' in \emph{Proc. of the Int. Conf. on Learning
+  Representations}, 2024.
+
+\bibitem{Flexer2007}
+A.~Flexer, ``A closer look on artist filters for musical genre
+  classification,'' in \emph{Proc. of the 8th International Society for Music
+  Information Retrieval Conference}, 2007, pp. 341--344.
+
+\bibitem{Torralba2011}
+A.~Torralba and A.~A. Efros, ``Unbiased look at dataset bias,'' in \emph{Proc.
+  of the IEEE Conference on Computer Vision and Pattern Recognition}, 2011, pp.
+  1521--1528.
 
 \bibitem{Ribeiro2016}
-M.~T. Ribeiro, S.~Singh, and C.~Guestrin, ````{Why} should {I} trust you?'': Explaining the predictions of any classifier,'' in \emph{Proc. of the 22nd ACM SIGKDD Int. Conf. on Knowledge Discovery and Data Mining}, 2016, pp. 1135--1144.
+M.~T. Ribeiro, S.~Singh, and C.~Guestrin, ````{Why} should {I} trust you?'':
+  Explaining the predictions of any classifier,'' in \emph{Proc. of the 22nd
+  ACM SIGKDD Int. Conf. on Knowledge Discovery and Data Mining}, 2016, pp.
+  1135--1144.
 
 \bibitem{Selvaraju2017}
-R.~R. Selvaraju, M.~Cogswell, A.~Das, R.~Vedantam, D.~Parikh, and D.~Batra, ``{Grad-CAM}: Visual explanations from deep networks via gradient-based localization,'' in \emph{Proc. of the IEEE Int. Conf. on Computer Vision}, 2017, pp. 618--626.
+R.~R. Selvaraju, M.~Cogswell, A.~Das, R.~Vedantam, D.~Parikh, and D.~Batra,
+  ``{Grad-CAM}: Visual explanations from deep networks via gradient-based
+  localization,'' in \emph{Proc. of the IEEE Int. Conf. on Computer Vision},
+  2017, pp. 618--626.
 
 \bibitem{Jain2019}
-S.~Jain and B.~C. Wallace, ``Attention is not explanation,'' in \emph{Proc. of the Conf. of the North American Chapter of the Association for Computational Linguistics}, 2019, pp. 3543--3556.
-
-\bibitem{Samek2017}
-W.~Samek, A.~Binder, G.~Montavon, S.~Lapuschkin, and K.-R. M{\"u}ller, ``Evaluating the visualization of what a deep neural network has learned,'' \emph{IEEE Trans. on Neural Networks and Learning Systems}, vol.~28, no.~11, pp. 2660--2673, 2017.
-
-\bibitem{Hooker2019}
-S.~Hooker, D.~Erhan, P.-J. Kindermans, and B.~Kim, ``A benchmark for interpretability methods in deep neural networks,'' in \emph{Advances in Neural Information Processing Systems}, vol.~32, 2019.
+S.~Jain and B.~C. Wallace, ``Attention is not explanation,'' in \emph{Proc. of
+  the Conf. of the North American Chapter of the Association for Computational
+  Linguistics}, 2019, pp. 3543--3556.
 
 \bibitem{Krishna2022}
-S.~Krishna, T.~Han, A.~Ber, J.~Bigham, and Z.~C. Lipton, ``The disagreement problem in explainable machine learning: A practitioner's perspective,'' \emph{arXiv preprint arXiv:2202.01602}, 2022.
+S.~Krishna, T.~Han, A.~Ber, J.~Bigham, and Z.~C. Lipton, ``The disagreement
+  problem in explainable machine learning: A practitioner's perspective,''
+  \emph{arXiv preprint arXiv:2202.01602}, 2022.
+
+\bibitem{Adebayo2018}
+J.~Adebayo, J.~Gilmer, M.~Muelly, I.~Goodfellow, M.~Hardt, and B.~Kim, ``Sanity
+  checks for saliency maps,'' in \emph{Advances in Neural Information
+  Processing Systems}, vol.~31, 2018.
+
+\bibitem{Samek2017}
+W.~Samek, A.~Binder, G.~Montavon, S.~Lapuschkin, and K.-R. M{\"u}ller,
+  ``Evaluating the visualization of what a deep neural network has learned,''
+  \emph{IEEE Trans. on Neural Networks and Learning Systems}, vol.~28, no.~11,
+  pp. 2660--2673, 2017.
+
+\bibitem{Hooker2019}
+S.~Hooker, D.~Erhan, P.-J. Kindermans, and B.~Kim, ``A benchmark for
+  interpretability methods in deep neural networks,'' in \emph{Advances in
+  Neural Information Processing Systems}, vol.~32, 2019.
 
 \bibitem{McFee2015}
-B.~McFee, C.~Raffel, D.~Liang, D.~P.~W. Ellis, M.~McVicar, E.~Battenberg, and O.~Nieto, ``librosa: Audio and music signal analysis in {Python},'' \emph{Proc. of the 14th Python in Science Conf.}, pp. 18--24, 2015.
-
-\bibitem{Ioffe2015}
-S.~Ioffe and C.~Szegedy, ``Batch normalization: Accelerating deep network training by reducing internal covariate shift,'' in \emph{Proc. of the 32nd Int. Conf. on Machine Learning}, 2015, pp. 448--456.
-
-\bibitem{Kingma2015}
-D.~P. Kingma and J.~Ba, ``Adam: A method for stochastic optimization,'' in \emph{Proc. of the 3rd Int. Conf. on Learning Representations}, 2015.
-
-\bibitem{Loshchilov2017}
-I.~Loshchilov and F.~Hutter, ``{SGDR}: Stochastic gradient descent with warm restarts,'' in \emph{Proc. of the 5th Int. Conf. on Learning Representations}, 2017.
+B.~McFee, C.~Raffel, D.~Liang, D.~P.~W. Ellis, M.~McVicar, E.~Battenberg, and
+  O.~Nieto, ``librosa: Audio and music signal analysis in {Python},''
+  \emph{Proc. of the 14th Python in Science Conf.}, pp. 18--24, 2015.
 
 \bibitem{Park2019}
-D.~S. Park, W.~Chan, Y.~Zhang, C.-C. Chiu, B.~Zoph, E.~D. Cubuk, and Q.~V. Le, ``{SpecAugment}: A simple data augmentation method for automatic speech recognition,'' in \emph{Proc. of Interspeech}, 2019, pp. 2613--2617.
+D.~S. Park, W.~Chan, Y.~Zhang, C.-C. Chiu, B.~Zoph, E.~D. Cubuk, and Q.~V. Le,
+  ``{SpecAugment}: A simple data augmentation method for automatic speech
+  recognition,'' in \emph{Proc. of Interspeech}, 2019, pp. 2613--2617.
+
+\bibitem{Ioffe2015}
+S.~Ioffe and C.~Szegedy, ``Batch normalization: Accelerating deep network
+  training by reducing internal covariate shift,'' in \emph{Proc. of the 32nd
+  Int. Conf. on Machine Learning}, 2015, pp. 448--456.
+
+\bibitem{Kingma2015}
+D.~P. Kingma and J.~Ba, ``Adam: A method for stochastic optimization,'' in
+  \emph{Proc. of the 3rd Int. Conf. on Learning Representations}, 2015.
+
+\bibitem{Loshchilov2017}
+I.~Loshchilov and F.~Hutter, ``{SGDR}: Stochastic gradient descent with warm
+  restarts,'' in \emph{Proc. of the 5th Int. Conf. on Learning
+  Representations}, 2017.
 
 \bibitem{Zhang2018}
-H.~Zhang, M.~Cisse, Y.~N. Dauphin, and D.~Lopez-Paz, ``mixup: Beyond empirical risk minimization,'' in \emph{Proc. of the 6th Int. Conf. on Learning Representations}, 2018.
+H.~Zhang, M.~Cisse, Y.~N. Dauphin, and D.~Lopez-Paz, ``mixup: Beyond empirical
+  risk minimization,'' in \emph{Proc. of the 6th Int. Conf. on Learning
+  Representations}, 2018.
 
 \bibitem{Paszke2019}
-A.~Paszke, S.~Gross, F.~Massa, A.~Lerer, J.~Bradbury, G.~Chanan, T.~Killeen, Z.~Lin, N.~Gimelshein, L.~Antiga, A.~Desmaison, A.~Kopf, E.~Yang, Z.~DeVito, M.~Raison, A.~Tejani, S.~Chilamkurthy, B.~Steiner, L.~Fang, J.~Bai, and S.~Chintala, ``{PyTorch}: An imperative style, high-performance deep learning library,'' in \emph{Advances in Neural Information Processing Systems}, vol.~32, 2019.
+A.~Paszke, S.~Gross, F.~Massa, A.~Lerer, J.~Bradbury, G.~Chanan, T.~Killeen,
+  Z.~Lin, N.~Gimelshein, L.~Antiga, A.~Desmaison, A.~Kopf, E.~Yang, Z.~DeVito,
+  M.~Raison, A.~Tejani, S.~Chilamkurthy, B.~Steiner, L.~Fang, J.~Bai, and
+  S.~Chintala, ``{PyTorch}: An imperative style, high-performance deep learning
+  library,'' in \emph{Advances in Neural Information Processing Systems},
+  vol.~32, 2019.
 
 \bibitem{Lundberg2017}
-S.~M. Lundberg and S.-I. Lee, ``A unified approach to interpreting model predictions,'' in \emph{Advances in Neural Information Processing Systems}, vol.~30, 2017.
+S.~M. Lundberg and S.-I. Lee, ``A unified approach to interpreting model
+  predictions,'' in \emph{Advances in Neural Information Processing Systems},
+  vol.~30, 2017.
 
 \bibitem{Shapley1953}
-L.~S. Shapley, ``A value for n-person games,'' in \emph{Contributions to the Theory of Games}, H.~W. Kuhn and A.~W. Tucker, Eds.\hskip 1em plus 0.5em minus 0.4em\relax Princeton University Press, 1953, vol.~2, pp. 307--317.
+L.~S. Shapley, ``A value for n-person games,'' in \emph{Contributions to the
+  Theory of Games}, H.~W. Kuhn and A.~W. Tucker, Eds.\hskip 1em plus 0.5em
+  minus 0.4em\relax Princeton University Press, 1953, vol.~2, pp. 307--317.
+
+\bibitem{Achanta2012}
+R.~Achanta, A.~Shaji, K.~Smith, A.~Lucchi, P.~Fua, and S.~S{\"u}sstrunk, ``Slic
+  superpixels compared to state-of-the-art superpixel methods,'' \emph{IEEE
+  Transactions on Pattern Analysis and Machine Intelligence}, vol.~34, no.~11,
+  pp. 2274--2282, 2012.
+
+\bibitem{Defferrard2017}
+M.~Defferrard, K.~Benzi, P.~Vandergheynst, and X.~Bresson, ``{FMA}: A dataset
+  for music analysis,'' in \emph{Proc. of the 18th International Society for
+  Music Information Retrieval Conference}, 2017, pp. 316--323.
 
 \end{thebibliography}
