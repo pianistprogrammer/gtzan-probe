@@ -1,0 +1,8 @@
+{
+  "model": "MusicResNet",
+  "checkpoint": "/Volumes/AI/Projects/gtzan-probe/models/resnet_gtzan_best.pt",
+  "n_explained": 10,
+  "n_resnet_correct_on_selected": 10,
+  "clips_are_same_as_musiccnn_selected": true,
+  "note": "Same 10 clips as MusicCNN explanation for direct architecture comparison. Different ResNet clips than MusicCNN correct clips may exist."
+}

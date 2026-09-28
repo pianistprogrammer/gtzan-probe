@@ -1,0 +1,11 @@
+filename,genre,resnet_correct,resnet_pred
+blues.00020.wav,blues,1,blues
+classical.00072.wav,classical,1,classical
+country.00054.wav,country,1,country
+disco.00095.wav,disco,1,disco
+hiphop.00054.wav,hiphop,1,hiphop
+jazz.00079.wav,jazz,1,jazz
+metal.00037.wav,metal,1,metal
+pop.00064.wav,pop,1,pop
+reggae.00015.wav,reggae,1,reggae
+rock.00025.wav,rock,1,rock

@@ -17,14 +17,13 @@ class ResidualBlock(nn.Module):
         self.bn1 = nn.BatchNorm2d(channels)
         self.conv2 = nn.Conv2d(channels, channels, 3, padding=1, bias=False)
         self.bn2 = nn.BatchNorm2d(channels)
-        self.relu = nn.ReLU(inplace=True)
+        self.relu = nn.ReLU(inplace=False)  # inplace=True breaks SHAP gradient hooks
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         residual = x
         out = self.relu(self.bn1(self.conv1(x)))
         out = self.bn2(self.conv2(out))
         return self.relu(out + residual)
-
 
 class MusicResNet(nn.Module):
     """Lightweight ResNet for 128×128 single-channel mel spectrograms.
@@ -40,7 +39,7 @@ class MusicResNet(nn.Module):
         self.stem = nn.Sequential(
             nn.Conv2d(1, 32, kernel_size=3, padding=1, bias=False),
             nn.BatchNorm2d(32),
-            nn.ReLU(inplace=True),
+            nn.ReLU(inplace=False),
         )
         # Residual stages with downsampling between them
         self.stage1 = nn.Sequential(
@@ -66,7 +65,7 @@ class MusicResNet(nn.Module):
         self.flat = nn.Flatten()
         self.head = nn.Sequential(
             nn.Linear(128 * 4 * 4, 256),
-            nn.ReLU(inplace=True),
+            nn.ReLU(inplace=False),
             nn.Dropout(dropout),
             nn.Linear(256, n_classes),
         )

@@ -88,9 +88,13 @@ def fma_audio_path(fma_audio_root: Path, track_id: int) -> Path:
     return fma_audio_root / folder / f"{tid_str}.mp3"
 
 
-def load_fma_spectrogram(audio_path: Path) -> tuple[np.ndarray, torch.Tensor]:
-    """Load FMA audio and return (spec_np, spec_tensor) matching GTZAN preprocessing."""
-    y, _ = librosa.load(str(audio_path), sr=SR, duration=FMA_DURATION)
+def load_fma_spectrogram(audio_path: Path) -> tuple[np.ndarray, torch.Tensor] | None:
+    """Load FMA audio and return (spec_np, spec_tensor) matching GTZAN preprocessing.
+    Returns None if the file cannot be decoded."""
+    try:
+        y, _ = librosa.load(str(audio_path), sr=SR, duration=FMA_DURATION)
+    except Exception:
+        return None
     # Use opening 3 seconds (same crop as GTZAN eval)
     seg_len = int(SEG_S * SR)
     if len(y) >= seg_len:
@@ -292,7 +296,10 @@ def main() -> None:
         path = fma_audio_path(fma_audio_root, int(row["track_id"]))
         if not path.exists():
             continue
-        spec_np, spec_t = load_fma_spectrogram(path)
+        result = load_fma_spectrogram(path)
+        if result is None:
+            continue
+        spec_np, spec_t = result
         spec_t = spec_t.to(device)
         with torch.no_grad():
             pred_idx = model(spec_t).argmax(1).item()
@@ -320,8 +327,11 @@ def main() -> None:
             path = fma_audio_path(fma_audio_root, int(row["track_id"]))
             if not path.exists():
                 continue
-            _, t = load_fma_spectrogram(path)
-            bg_tensors.append(t.squeeze(0))
+            result = load_fma_spectrogram(path)
+            if result is None:
+                continue
+            _, t = result
+            bg_tensors.append(t)          # keep [1,1,128,128]; cat → [N,1,128,128]
             if len(bg_tensors) >= N_SHAP_BG:
                 break
         if len(bg_tensors) >= N_SHAP_BG:
@@ -336,12 +346,15 @@ def main() -> None:
         path = fma_audio_path(fma_audio_root, int(row["track_id"]))
         if not path.exists():
             continue
-        spec_np, spec_t = load_fma_spectrogram(path)
+        result = load_fma_spectrogram(path)
+        if result is None:
+            continue
+        spec_np, spec_t = result
         spec_t = spec_t.to(device)
         true_idx = int(le.transform([row["genre_gtzan"]])[0])
-        with torch.no_grad():
-            shap_vals = explainer.shap_values(spec_t)
-        shap_map = shap_vals[true_idx][0, 0]
+        # SHAP 0.51.0: returns (batch, C, H, W, n_classes); do NOT use no_grad
+        shap_vals = explainer.shap_values(spec_t)
+        shap_map = shap_vals[0, 0, :, :, true_idx]  # (128, 128) signed
         rec = {
             "track_id": int(row["track_id"]),
             "genre_gtzan": row["genre_gtzan"],

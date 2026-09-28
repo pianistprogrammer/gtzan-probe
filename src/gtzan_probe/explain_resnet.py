@@ -114,11 +114,9 @@ def main() -> None:
     n_resnet_correct = ver_df["resnet_correct"].sum()
     print(f"ResNet correct on selected 10 clips: {n_resnet_correct}/10")
 
-    # SHAP backgrounds
-    train_meta = meta_df.merge(
-        pd.read_csv(DATA_DIR / "../results/revision_audit/legacy_split.csv"),
-        on="filename", how="left"
-    )
+    # SHAP backgrounds — load split info keeping only filename+split to avoid duplicate genre column
+    split_df = pd.read_csv(DATA_DIR.parent / "results" / "revision_audit" / "legacy_split.csv")[["filename", "split"]]
+    train_meta = meta_df.merge(split_df, on="filename", how="left")
     bg_tensors = []
     for g in GENRES:
         rows = train_meta[
@@ -126,7 +124,7 @@ def main() -> None:
         ].head(5)
         for _, row in rows.iterrows():
             _, t = load_spectrogram(row["filepath"])
-            bg_tensors.append(t.squeeze(0))
+            bg_tensors.append(t)           # [1,1,128,128]; cat → [N,1,128,128]
     bg = torch.cat(bg_tensors[:N_SHAP_BG], dim=0).to(device)
     explainer = shap.DeepExplainer(model, bg)
 
@@ -136,9 +134,11 @@ def main() -> None:
         spec_t = spec_t.to(device)
         true_idx = int(le.transform([row["true_genre"]])[0])
 
-        with torch.no_grad():
-            shap_vals = explainer.shap_values(spec_t)
-        shap_map = shap_vals[true_idx][0, 0]
+        # SHAP 0.51.0: returns (batch, C, H, W, n_classes); do NOT use no_grad
+        # check_additivity=False needed because residual connections cause minor
+        # approximation error that exceeds SHAP's strict tolerance.
+        shap_vals = explainer.shap_values(spec_t, check_additivity=False)
+        shap_map = shap_vals[0, 0, :, :, true_idx]  # (128, 128) signed
 
         lime_map = None
         if not args.shap_only:
