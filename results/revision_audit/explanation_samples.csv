@@ -1,0 +1,11 @@
+genre,filename,target_class,current_prediction,current_target_probability,lime_segments
+blues,blues.00020.wav,blues,blues,0.9580282,32
+classical,classical.00072.wav,classical,classical,0.80692774,36
+country,country.00054.wav,country,country,0.9028112,33
+disco,disco.00095.wav,disco,disco,0.98391795,33
+hiphop,hiphop.00054.wav,hiphop,hiphop,0.92444277,29
+jazz,jazz.00079.wav,jazz,jazz,0.48876002,27
+metal,metal.00037.wav,metal,metal,0.58373326,34
+pop,pop.00064.wav,pop,pop,0.9144441,35
+reggae,reggae.00015.wav,reggae,reggae,0.66473556,32
+rock,rock.00025.wav,rock,rock,0.59985065,33

@@ -1,0 +1,11 @@
+true_genre,blues,classical,country,disco,hiphop,jazz,metal,pop,reggae,rock
+blues,19,0,0,0,0,0,0,0,0,1
+classical,0,20,0,0,0,0,0,0,0,0
+country,1,0,15,0,0,1,0,0,0,3
+disco,0,0,1,13,1,0,0,3,1,1
+hiphop,0,0,0,0,19,0,0,0,1,0
+jazz,0,0,0,0,0,19,0,0,0,0
+metal,0,0,0,1,0,0,17,0,0,2
+pop,0,0,0,0,1,0,0,17,1,1
+reggae,0,0,1,0,1,1,0,1,14,2
+rock,0,0,1,0,0,0,0,6,0,13

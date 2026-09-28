@@ -1,0 +1,42 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Data and generated artifacts
+data/
+*.csv
+figures/
+Paper/
+
+# Trained model files (too large for GitHub; store separately)
+models/*.pt
+models/*.pkl
+
+# Local revision environments and private submission material
+.venv*/
+/paper/
+/cover_letter.txt
+/release/
+/tmp/
+.DS_Store
+**/.DS_Store
+._*
+**/._*
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Small, sanitized evidence tables are intentionally shareable.
+!results/
+!results/**/*.csv
+# Historical planning note retained locally; superseded by docs/.
+/PRD.md

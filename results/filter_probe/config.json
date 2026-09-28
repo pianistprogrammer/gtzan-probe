@@ -1,0 +1,88 @@
+{
+  "status": "exploratory post-review probe, no new training",
+  "checkpoint_sha256": "c76d69045371904b6a8845d98b25100dfe3051951d6c61d4d05497b013b1fd64",
+  "source_prediction_sha256": "b571521ed55775cfbae24bc1865c0308b775f4f83fb5295dc63c32204b79a8c7",
+  "script_sha256": "363307c94bd46b3b5a37981210d87313728d3292f39a9c445035bf45413ae04d",
+  "python": "3.13.13",
+  "sample_rate": 22050,
+  "crop_start_seconds": 0,
+  "crop_duration_seconds": 3.0,
+  "gains_db": [
+    -12,
+    -6,
+    0,
+    6,
+    12
+  ],
+  "filter_response": "parallel mix y+(10^(dB/20)-1)*sosfiltfilt(sos,y); transition response is not a brick wall",
+  "sos": {
+    "lowpass_250": [
+      [
+        1.4690184481583385e-06,
+        2.938036896316677e-06,
+        1.4690184481583385e-06,
+        1.0,
+        -1.8718360896053416,
+        0.8765957902160574
+      ],
+      [
+        1.0,
+        2.0,
+        1.0,
+        1.0,
+        -1.9420292939916943,
+        0.9469674817251027
+      ]
+    ],
+    "bandpass_2000_6000": [
+      [
+        0.034187328761352304,
+        0.06837465752270461,
+        0.034187328761352304,
+        1.0,
+        -0.2238599316421493,
+        0.22751572906551995
+      ],
+      [
+        1.0,
+        -2.0,
+        1.0,
+        1.0,
+        -0.9939169364383831,
+        0.38377568865159084
+      ],
+      [
+        1.0,
+        2.0,
+        1.0,
+        1.0,
+        0.17684501654095283,
+        0.6261115083313216
+      ],
+      [
+        1.0,
+        -2.0,
+        1.0,
+        1.0,
+        -1.4768570205411786,
+        0.7730617902663737
+      ]
+    ]
+  },
+  "classes": [
+    "blues",
+    "classical",
+    "country",
+    "disco",
+    "hiphop",
+    "jazz",
+    "metal",
+    "pop",
+    "reggae",
+    "rock"
+  ],
+  "rms_matching": "positive uniform scaling after filtering; preprocessing largely removes uniform level changes",
+  "clip_handling": "floating-point model input; no clipping or peak normalization",
+  "split": "historical validation reused as evaluation; artist overlap unresolved",
+  "limit": 0
+}

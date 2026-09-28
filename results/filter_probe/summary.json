@@ -1,0 +1,10 @@
+{
+  "n_tracks": 199,
+  "n_condition_rows": 4179,
+  "baseline_correct": 166,
+  "max_sham_probability_change": 7.748603820800781e-07,
+  "max_rms_vs_unmatched_hiphop_change_difference": 7.152557373046875e-07,
+  "failed_tracks": 0,
+  "uncertainty": "Descriptive only: artist/recording groups unresolved; validation was reused for selection. No independent-track inferential CI claimed.",
+  "hypothesis_status": "Exploratory, selected in response to review and existing attribution observations; not preregistered."
+}

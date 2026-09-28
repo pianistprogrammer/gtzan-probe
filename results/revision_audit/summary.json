@@ -1,0 +1,49 @@
+{
+  "status": "audit of legacy artifacts; not a fresh training replication",
+  "n_predictions": 199,
+  "n_correct": 166,
+  "accuracy": 0.8341708542713567,
+  "n_train": 793,
+  "n_validation": 199,
+  "n_flag_clean": 992,
+  "metadata_fault_counts": {
+    "clean": 992,
+    "duplicate": 4,
+    "corrupt": 2,
+    "mislabeled": 2
+  },
+  "n_explained": 10,
+  "n_model_parameters": 813994,
+  "evaluation_filenames_match_reconstructed_split": true,
+  "max_saved_recomputed_conf_drop_difference": 3.669395446936896e-07,
+  "max_saved_recomputed_original_conf_difference": 3.2430915830605755e-07,
+  "shap_background_candidate_overlap_with_validation": [
+    "blues.00001.wav",
+    "blues.00002.wav",
+    "classical.00004.wav",
+    "country.00000.wav",
+    "country.00001.wav",
+    "disco.00003.wav",
+    "hiphop.00004.wav",
+    "jazz.00001.wav",
+    "metal.00003.wav",
+    "pop.00000.wav",
+    "pop.00004.wav",
+    "reggae.00003.wav",
+    "rock.00003.wav"
+  ],
+  "historical_seeds_training_and_lime": "not recorded",
+  "historical_checkpoint_to_attribution_link": "not recorded; matching input does not establish matching model",
+  "python": "3.13.13",
+  "packages": {
+    "torch": "2.11.0",
+    "numpy": "2.4.3",
+    "pandas": "3.0.1",
+    "librosa": "0.11.0",
+    "scipy": "1.17.1",
+    "shap": "0.51.0",
+    "lime": "0.2.0.1"
+  },
+  "git_revision": "6fb53e51d847b5d784be3366930b40d847066df5",
+  "working_tree_changes_present": true
+}
