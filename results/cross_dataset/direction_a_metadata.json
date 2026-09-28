@@ -1,0 +1,8 @@
+{
+  "model": "MusicCNN (GTZAN, 10 classes)",
+  "data": "FMA-small (hip-hop, pop, rock)",
+  "n_evaluated": 599,
+  "n_correct": 159,
+  "accuracy": 0.2654424040066778,
+  "note": "GTZAN model applied to out-of-distribution FMA data. Genre label equivalence is not assumed."
+}
