@@ -40,3 +40,6 @@ models/*.pkl
 !results/**/*.csv
 # Historical planning note retained locally; superseded by docs/.
 /PRD.md
+# macOS resource fork files (must be explicit for subdirectories)
+results/**/.DS_Store
+results/**/._*
