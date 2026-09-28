@@ -1,0 +1,6 @@
+{
+  "n_train": 2400,
+  "n_val": 600,
+  "protocol": "random stratified 80/20 (random_state=42), not artist-disjoint",
+  "limitation": "Artist replication not controlled; same limitation as GTZAN split."
+}

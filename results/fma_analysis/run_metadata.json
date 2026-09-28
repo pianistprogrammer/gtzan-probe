@@ -1,0 +1,18 @@
+{
+  "n_mapped_tracks": 3000,
+  "n_train": 2400,
+  "n_val": 600,
+  "n_correct": 461,
+  "val_accuracy": 0.7696160267111853,
+  "mapped_genres": [
+    "hiphop",
+    "pop",
+    "rock"
+  ],
+  "fma_to_gtzan": {
+    "Hip-Hop": "hiphop",
+    "Pop": "pop",
+    "Rock": "rock"
+  },
+  "note": "3-class model trained on FMA-small subset. Random 80/20 split, not artist-disjoint. SHAP backgrounds from training data only. FMA and GTZAN label equivalence is NOT assumed."
+}

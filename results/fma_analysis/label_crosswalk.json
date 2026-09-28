@@ -1,0 +1,16 @@
+{
+  "mapping": {
+    "Hip-Hop": "hiphop",
+    "Pop": "pop",
+    "Rock": "rock"
+  },
+  "excluded_fma_genres": [
+    "Folk",
+    "Experimental",
+    "International",
+    "Electronic",
+    "Instrumental"
+  ],
+  "n_mapped": 3000,
+  "note": "FMA genre labels are not equivalent to GTZAN labels. This mapping is an operational choice for exploratory comparison. Genre names alone do not justify treating annotations as identical."
+}
