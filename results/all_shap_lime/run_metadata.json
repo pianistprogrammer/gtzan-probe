@@ -1,0 +1,11 @@
+{
+  "n_explained": 166,
+  "n_correct_total": 166,
+  "shap_backgrounds": 50,
+  "lime_perturbations": 500,
+  "lime_segments": 40,
+  "elapsed_seconds": 388.56563687324524,
+  "checkpoint_sha256": "c76d69045371904b6a8845d98b25100dfe3051951d6c61d4d05497b013b1fd64",
+  "device": "mps",
+  "note": "Training-data backgrounds used for SHAP; backgrounds verified against reconstructed split. Evaluation partition reused as test set (validation overlap unresolved)."
+}

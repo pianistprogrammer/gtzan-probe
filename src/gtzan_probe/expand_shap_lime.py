@@ -98,6 +98,9 @@ def lime_explain(spec_np: np.ndarray, model: MusicCNN, device: str,
 def build_shap_explainer(model: MusicCNN, meta: pd.DataFrame,
                           device: str) -> shap.DeepExplainer:
     """Build SHAP background from first 5 training entries per genre."""
+    split_path = DATA_DIR.parent / "results" / "revision_audit" / "legacy_split.csv"
+    split_df = pd.read_csv(split_path)[["filename", "split"]]
+    meta = meta.merge(split_df, on="filename", how="left")
     train_meta = meta[meta["split"] == "train"]
     bg_rows = []
     for g in GENRES:
@@ -107,7 +110,7 @@ def build_shap_explainer(model: MusicCNN, meta: pd.DataFrame,
     tensors = []
     for _, row in bg_meta.iterrows():
         _, t = load_spectrogram(row["filepath"])
-        tensors.append(t.squeeze(0))
+        tensors.append(t)          # shape [1, 1, 128, 128]; cat → [N, 1, 128, 128]
     bg = torch.cat(tensors, dim=0).to(device)
     return shap.DeepExplainer(model, bg)
 
@@ -161,11 +164,11 @@ def main() -> None:
         spec_np, spec_t = load_spectrogram(row["filepath"])
         spec_t = spec_t.to(device)
 
-        # SHAP
-        with torch.no_grad():
-            shap_vals = explainer.shap_values(spec_t)
+        # SHAP (requires grad — do NOT wrap in torch.no_grad())
+        # SHAP 0.51.0 returns shape (batch, C, H, W, n_classes); class axis is last.
+        shap_vals = explainer.shap_values(spec_t)
         true_idx = le.transform([row["true_genre"]])[0]
-        shap_map = shap_vals[true_idx][0, 0]  # (128, 128) signed
+        shap_map = shap_vals[0, 0, :, :, true_idx]  # (128, 128) signed
 
         # LIME (optional)
         lime_map = None
